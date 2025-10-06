@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model challenges {
+  id                  Int                  @id @default(autoincrement())
+  c_target            c_target_type
+  c_description       String               @db.VarChar(280)
+  title               String               @db.VarChar(64)
+  time_created        DateTime             @db.Timestamp(6)
+  open_challenges     open_challenges?
+  targeted_challenges targeted_challenges?
+}
+
+model open_challenges {
+  challenge_id Int        @id
+  submissions  Int
+  challenges   challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model targeted_challenges {
+  challenge_id      Int        @id
+  value_bet_for     Int
+  value_bet_against Int
+  specific_target   String     @db.VarChar(50)
+  challenges        challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum c_target_type {
+  targeted
+  open
+}
