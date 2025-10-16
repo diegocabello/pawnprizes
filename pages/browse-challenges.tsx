@@ -52,8 +52,8 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
       }
       const data = await res.json();
       setChallenges(data.challenges);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
     }
@@ -112,8 +112,8 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
       setBetPopup(null);
       setBetAmount('');
       setBetError('');
-    } catch (err: any) {
-      setBetError(err.message);
+    } catch (err) {
+      setBetError(err instanceof Error ? err.message : 'An error occurred');
     }
   };
 

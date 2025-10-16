@@ -21,8 +21,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     return res.status(200).json({ challenges });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching challenges:', error);
-    return res.status(500).json({ error: 'Failed to fetch challenges', details: error.message });
+    return res.status(500).json({
+      error: 'Failed to fetch challenges',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }

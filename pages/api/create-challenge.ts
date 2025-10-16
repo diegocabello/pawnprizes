@@ -63,9 +63,12 @@ async function handleCreateChallenge(req: NextApiRequest, res: NextApiResponse) 
     });
 
     return res.status(201).json({ success: true, challenge });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error creating challenge:', error);
-    return res.status(500).json({ error: 'Failed to create challenge', details: error.message });
+    return res.status(500).json({
+      error: 'Failed to create challenge',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }
 
@@ -104,8 +107,11 @@ async function handlePlaceBet(req: NextApiRequest, res: NextApiResponse) {
     });
 
     return res.status(200).json({ success: true, challenge: updatedChallenge });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error placing bet:', error);
-    return res.status(500).json({ error: 'Failed to place bet', details: error.message });
+    return res.status(500).json({
+      error: 'Failed to place bet',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }
