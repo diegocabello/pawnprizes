@@ -73,7 +73,7 @@ export default function Profile() {
         // Bets tab is a placeholder for now
         setBets([]);
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error fetching tab data:', err);
     }
   };
@@ -191,10 +191,10 @@ export default function Profile() {
               <div>
                 <h2 className="text-xl font-semibold mb-4">My Bets</h2>
                 {bets.length === 0 ? (
-                  <p className="text-gray-500 dark:text-gray-400">You haven't placed any bets yet.</p>
+                  <p className="text-gray-500 dark:text-gray-400">You haven&apos;t placed any bets yet.</p>
                 ) : (
                   <div className="space-y-3">
-                    {bets.map((bet: any) => (
+                    {bets.map((bet) => (
                       <div
                         key={bet.id}
                         className="border border-gray-300 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-900"
@@ -225,12 +225,12 @@ export default function Profile() {
             {/* Challenges Created Tab */}
             {activeTab === 'challenges' && (
               <div>
-                <h2 className="text-xl font-semibold mb-4">Challenges I've Created</h2>
+                <h2 className="text-xl font-semibold mb-4">Challenges I&apos;ve Created</h2>
                 {challenges.length === 0 ? (
-                  <p className="text-gray-500 dark:text-gray-400">You haven't created any challenges yet.</p>
+                  <p className="text-gray-500 dark:text-gray-400">You haven&apos;t created any challenges yet.</p>
                 ) : (
                   <div className="space-y-3">
-                    {challenges.map((challenge: any) => (
+                    {challenges.map((challenge) => (
                       <div
                         key={challenge.id}
                         className="border border-gray-300 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-900"
@@ -275,10 +275,10 @@ export default function Profile() {
               <div>
                 <h2 className="text-xl font-semibold mb-4">My Challenge Submissions</h2>
                 {submissions.length === 0 ? (
-                  <p className="text-gray-500 dark:text-gray-400">You haven't submitted to any challenges yet.</p>
+                  <p className="text-gray-500 dark:text-gray-400">You haven&apos;t submitted to any challenges yet.</p>
                 ) : (
                   <div className="space-y-3">
-                    {submissions.map((submission: any) => (
+                    {submissions.map((submission) => (
                       <div
                         key={submission.id}
                         className="border border-gray-300 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-900"
