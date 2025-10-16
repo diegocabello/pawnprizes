@@ -10,10 +10,10 @@ export default function Profile() {
   const router = useRouter();
   const { user, isLoading, checked } = useRequireRegistration();
   const [activeTab, setActiveTab] = useState<TabType>('details');
-  const [profileData, setProfileData] = useState<any>(null);
-  const [challenges, setChallenges] = useState<any[]>([]);
-  const [submissions, setSubmissions] = useState<any[]>([]);
-  const [bets, setBets] = useState<any[]>([]);
+  const [profileData, setProfileData] = useState<Record<string, unknown> | null>(null);
+  const [challenges, setChallenges] = useState<Record<string, unknown>[]>([]);
+  const [submissions, setSubmissions] = useState<Record<string, unknown>[]>([]);
+  const [bets, setBets] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -42,8 +42,8 @@ export default function Profile() {
 
       const data = await res.json();
       setProfileData(data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
     }
