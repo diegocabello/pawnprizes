@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, MouseEvent } from 'react';
+import { useRequireRegistration } from '@/hooks/useRequireRegistration';
 
 type Challenge = {
   id: number;
@@ -35,6 +36,9 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
   } | null>(null);
   const [betAmount, setBetAmount] = useState<string>('');
   const [betError, setBetError] = useState<string>('');
+
+  const { user, isLoading, checked } = useRequireRegistration();
+
 
   useEffect(() => {
     fetchChallenges();
@@ -115,7 +119,7 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-custom-dark text-black dark:text-white p-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-8">
         <div className="text-center">Loading challenges...</div>
       </div>
     );
@@ -123,25 +127,25 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white dark:bg-custom-dark text-black dark:text-white p-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-8">
         <div className="text-center text-red-600 dark:text-red-400">Error: {error}</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-custom-dark text-black dark:text-white p-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-8">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">Browse Challenges</h1>
 
         {challenges.length === 0 ? (
-          <p className="text-gray-500">No challenges found.</p>
+          <p className="text-gray-500 dark:text-gray-400">No challenges found.</p>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {challenges.map((challenge) => (
               <div
                 key={challenge.id}
-                className="border border-gray-300 dark:border-gray-600 rounded-lg p-6 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow"
+                className="border border-gray-300 dark:border-gray-700 rounded-lg p-6 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex justify-between items-start mb-2">
                   <h2 className="text-xl font-semibold">{challenge.title}</h2>
@@ -154,7 +158,7 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
                   </span>
                 </div>
 
-                <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm">
+                <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm">
                   {challenge.c_description}
                 </p>
 
@@ -162,13 +166,13 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
                 {challenge.c_target === 'targeted' && challenge.targeted_challenges && (
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Target:</span>
+                      <span className="text-gray-600 dark:text-gray-400">Target:</span>
                       <span className="font-medium">{challenge.targeted_challenges.specific_target}</span>
                     </div>
                     <div className="pb-4">
-                      <span className="text-gray-500"><u>Betting Spread:</u></span>
+                      <span className="text-gray-600 dark:text-gray-400"><u>Betting Spread:</u></span>
                     </div>
-                    <div className="flex justify-between items-center text-gray-500 text-xs">
+                    <div className="flex justify-between items-center text-gray-600 dark:text-gray-400 text-xs">
                       <span
                         className="cursor-pointer hover:text-blue-600"
                         title="Bet For"
@@ -219,13 +223,13 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
                 {challenge.c_target === 'open' && challenge.open_challenges && (
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Submissions:</span>
+                      <span className="text-gray-600 dark:text-gray-400">Submissions:</span>
                       <span className="font-medium">{challenge.open_challenges.submissions}</span>
                     </div>
                   </div>
                 )}
 
-                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-400">
+                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
                   {new Date(challenge.time_created).toLocaleDateString()}
                 </div>
               </div>
@@ -243,14 +247,14 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
             />
             {/* Popup */}
             <div
-              className="fixed z-50 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg p-4 w-64"
+              className="fixed z-50 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg p-4 w-64"
               style={{
                 left: `${betPopup.x}px`,
                 top: `${betPopup.y}px`,
                 transform: 'translate(-50%, 10px)'
               }}
             >
-              <h3 className="text-sm font-semibold mb-2">
+              <h3 className="text-sm font-semibold mb-2 text-gray-900 dark:text-gray-100">
                 Bet {betPopup.betType === 'for' ? 'For' : 'Against'}
               </h3>
               <input
@@ -258,22 +262,22 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
                 value={betAmount}
                 onChange={(e) => setBetAmount(e.target.value)}
                 placeholder="Enter amount"
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-black dark:text-white mb-2"
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 autoFocus
               />
               {betError && (
-                <p className="text-red-500 text-xs mb-2">{betError}</p>
+                <p className="text-red-500 dark:text-red-400 text-xs mb-2">{betError}</p>
               )}
               <div className="flex gap-2">
                 <button
                   onClick={handlePlaceBet}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded text-sm"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded text-sm transition-colors"
                 >
                   Place Bet
                 </button>
                 <button
                   onClick={() => setBetPopup(null)}
-                  className="flex-1 bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 py-1 px-3 rounded text-sm"
+                  className="flex-1 bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-900 dark:text-gray-100 py-1 px-3 rounded text-sm transition-colors"
                 >
                   Cancel
                 </button>

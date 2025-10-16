@@ -9,18 +9,21 @@ datasource db {
 }
 
 model challenges {
-  id                  Int                  @id @default(autoincrement())
-  c_target            c_target_type
-  c_description       String               @db.VarChar(280)
-  title               String               @db.VarChar(64)
-  time_created        DateTime             @db.Timestamp(6)
-  open_challenges     open_challenges?
-  targeted_challenges targeted_challenges?
+  id                    Int                     @id @default(autoincrement())
+  c_target              c_target_type
+  c_description         String                  @db.VarChar(280)
+  title                 String                  @db.VarChar(64)
+  time_created          DateTime                @default(now()) @db.Timestamp(6)
+  creator_id            String?                 @db.VarChar(50)
+  challenge_submissions challenge_submissions[]
+  profile               profile?                @relation(fields: [creator_id], references: [profile_id], onDelete: NoAction, onUpdate: NoAction)
+  open_challenges       open_challenges?
+  targeted_challenges   targeted_challenges?
 }
 
 model open_challenges {
   challenge_id Int        @id
-  submissions  Int
+  submissions  Int        @default(0)
   challenges   challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
@@ -32,7 +35,38 @@ model targeted_challenges {
   challenges        challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
+model challenge_submissions {
+  id              Int        @id @default(autoincrement())
+  user_id         String     @db.VarChar(50)
+  challenge_id    Int
+  submission_data String?
+  time_submitted  DateTime   @default(now()) @db.Timestamp(6)
+  challenges      challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  profile         profile    @relation(fields: [user_id], references: [profile_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([user_id, challenge_id])
+}
+
+model profile {
+  profile_id            String                  @id @db.VarChar(50)
+  first_name            String
+  last_name             String
+  coins                 Int                     @default(0)
+  phone_number          String                  @db.VarChar(15)
+  email                 String                  @unique @db.VarChar(100)
+  date_of_birth         DateTime                @db.Date
+  gender                gender_type
+  challenge_submissions challenge_submissions[]
+  challenges            challenges[]
+}
+
 enum c_target_type {
   targeted
   open
+}
+
+enum gender_type {
+  male
+  female
+  other
 }

@@ -2,6 +2,7 @@
 
 import { useState, FormEvent, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import { useRequireRegistration } from '@/hooks/useRequireRegistration';
 
 export default function CreateChallenge() {
   const router = useRouter();
@@ -59,7 +60,7 @@ export default function CreateChallenge() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-custom-dark text-black dark:text-white p-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-8">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">Create Challenge</h1>
 
@@ -78,14 +79,14 @@ export default function CreateChallenge() {
 
           {/* Challenge Type Dropdown */}
           <div>
-            <label htmlFor="challengeType" className="block text-sm font-medium mb-2">
+            <label htmlFor="challengeType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Challenge Type
             </label>
             <select
               id="challengeType"
               value={challengeType}
               onChange={(e) => setChallengeType(e.target.value as 'targeted' | 'open')}
-              className="p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800"
+              className="p-2 border border-gray-300 dark:border-gray-600 rounded bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               style={{ width: dropdownWidth > 0 ? `${dropdownWidth}px` : 'auto' }}
               required
             >
@@ -96,7 +97,7 @@ export default function CreateChallenge() {
 
           {/* Title */}
           <div>
-            <label htmlFor="title" className="block text-sm font-medium mb-2">
+            <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Title
             </label>
             <input
@@ -105,15 +106,15 @@ export default function CreateChallenge() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               maxLength={64}
-              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800"
+              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
-            <p className="text-xs text-gray-500 mt-1">{title.length}/64 characters</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{title.length}/64 characters</p>
           </div>
 
           {/* Description */}
           <div>
-            <label htmlFor="description" className="block text-sm font-medium mb-2">
+            <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Description
             </label>
             <textarea
@@ -122,16 +123,16 @@ export default function CreateChallenge() {
               onChange={(e) => setDescription(e.target.value)}
               maxLength={280}
               rows={4}
-              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800"
+              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
-            <p className="text-xs text-gray-500 mt-1">{description.length}/280 characters</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{description.length}/280 characters</p>
           </div>
 
           {/* Specific Target (only for targeted challenges) */}
           {challengeType === 'targeted' && (
             <div>
-              <label htmlFor="specificTarget" className="block text-sm font-medium mb-2">
+              <label htmlFor="specificTarget" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Specific Target
               </label>
               <input
@@ -140,16 +141,16 @@ export default function CreateChallenge() {
                 value={specificTarget}
                 onChange={(e) => setSpecificTarget(e.target.value)}
                 maxLength={50}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800"
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
-              <p className="text-xs text-gray-500 mt-1">{specificTarget.length}/50 characters</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{specificTarget.length}/50 characters</p>
             </div>
           )}
 
           {/* Error Message */}
           {error && (
-            <div className="p-3 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded">
+            <div className="p-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-200 rounded">
               {error}
             </div>
           )}
@@ -159,7 +160,7 @@ export default function CreateChallenge() {
             <button
               type="submit"
               disabled={loading}
-              className="w-auto px-12 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded font-medium"
+              className="w-auto px-12 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded font-medium transition-colors"
             >
               {loading ? 'Creating...' : 'Create Challenge'}
             </button>

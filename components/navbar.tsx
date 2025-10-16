@@ -15,12 +15,12 @@ export default function Navbar({ coins, setCoins }: NavbarProps) {
 
   return (
     <>
-      <nav className="flex justify-between items-center p-4 bg-white dark:bg-custom-dark text-black dark:text-white shadow-md relative z-20">
+      <nav className="flex justify-between items-center p-4 bg-white dark:bg-[#0a0a0a] text-black dark:text-white shadow-md relative z-20">
         {/* Left: Hamburger and Coins */}
         <div className="flex items-center gap-4">
           <button
             onClick={() => setMenuOpen(true)}
-            className="text-md"
+            className="text-md hover:opacity-70 transition-opacity"
             aria-label="Open menu"
           >
             <FaBars />
@@ -50,9 +50,9 @@ export default function Navbar({ coins, setCoins }: NavbarProps) {
             {/* Backdrop */}
             <motion.div
               key="backdrop"
-              className="fixed inset-0 bg-white dark:bg-cusom-sidebar bg-opacity-50 z-10"
+              className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 z-10"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setMenuOpen(false)}
               aria-hidden="true"
@@ -61,7 +61,7 @@ export default function Navbar({ coins, setCoins }: NavbarProps) {
             {/* Slide-in menu drawer */}
             <motion.aside
               key="menu"
-              className="fixed top-0 left-0 h-full w-64 bg-white dark:bg-cusom-sidebar shadow-lg z-20 p-6 flex flex-col gap-4 text-lg text-black dark:text-white"
+              className="fixed top-0 left-0 h-full w-64 bg-white dark:bg-[#1a1a1a] shadow-lg z-20 p-6 flex flex-col gap-4 text-lg text-black dark:text-white"
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
@@ -71,19 +71,31 @@ export default function Navbar({ coins, setCoins }: NavbarProps) {
             >
               <button
                 onClick={() => setMenuOpen(false)}
-                className="self-end text-xl"
+                className="self-end text-xl hover:opacity-70 transition-opacity"
                 aria-label="Close menu"
               >
-                x
+                ✕
               </button>
-              <Link href="/" onClick={() => setMenuOpen(false)}>
+              <Link
+                href="/"
+                onClick={() => setMenuOpen(false)}
+                className="hover:opacity-70 transition-opacity"
+              >
                 Watch
               </Link>
-              <Link href="/host-event" onClick={() => setMenuOpen(false)}>
+              <Link
+                href="/host-event"
+                onClick={() => setMenuOpen(false)}
+                className="hover:opacity-70 transition-opacity"
+              >
                 Make Challenge
               </Link>
-              <Link href="/profile" onClick={() => setMenuOpen(false)}>
-                View Challenges
+              <Link
+                href="/profile"
+                onClick={() => setMenuOpen(false)}
+                className="hover:opacity-70 transition-opacity"
+              >
+                Profile
               </Link>
             </motion.aside>
           </>

@@ -28,6 +28,16 @@ export type open_challenges = $Result.DefaultSelection<Prisma.$open_challengesPa
  * 
  */
 export type targeted_challenges = $Result.DefaultSelection<Prisma.$targeted_challengesPayload>
+/**
+ * Model challenge_submissions
+ * 
+ */
+export type challenge_submissions = $Result.DefaultSelection<Prisma.$challenge_submissionsPayload>
+/**
+ * Model profile
+ * 
+ */
+export type profile = $Result.DefaultSelection<Prisma.$profilePayload>
 
 /**
  * Enums
@@ -40,11 +50,24 @@ export namespace $Enums {
 
 export type c_target_type = (typeof c_target_type)[keyof typeof c_target_type]
 
+
+export const gender_type: {
+  male: 'male',
+  female: 'female',
+  other: 'other'
+};
+
+export type gender_type = (typeof gender_type)[keyof typeof gender_type]
+
 }
 
 export type c_target_type = $Enums.c_target_type
 
 export const c_target_type: typeof $Enums.c_target_type
+
+export type gender_type = $Enums.gender_type
+
+export const gender_type: typeof $Enums.gender_type
 
 /**
  * ##  Prisma Client ʲˢ
@@ -193,6 +216,26 @@ export class PrismaClient<
     * ```
     */
   get targeted_challenges(): Prisma.targeted_challengesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.challenge_submissions`: Exposes CRUD operations for the **challenge_submissions** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Challenge_submissions
+    * const challenge_submissions = await prisma.challenge_submissions.findMany()
+    * ```
+    */
+  get challenge_submissions(): Prisma.challenge_submissionsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.profile`: Exposes CRUD operations for the **profile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Profiles
+    * const profiles = await prisma.profile.findMany()
+    * ```
+    */
+  get profile(): Prisma.profileDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -635,7 +678,9 @@ export namespace Prisma {
   export const ModelName: {
     challenges: 'challenges',
     open_challenges: 'open_challenges',
-    targeted_challenges: 'targeted_challenges'
+    targeted_challenges: 'targeted_challenges',
+    challenge_submissions: 'challenge_submissions',
+    profile: 'profile'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -654,7 +699,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "challenges" | "open_challenges" | "targeted_challenges"
+      modelProps: "challenges" | "open_challenges" | "targeted_challenges" | "challenge_submissions" | "profile"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -880,6 +925,154 @@ export namespace Prisma {
           }
         }
       }
+      challenge_submissions: {
+        payload: Prisma.$challenge_submissionsPayload<ExtArgs>
+        fields: Prisma.challenge_submissionsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.challenge_submissionsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$challenge_submissionsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.challenge_submissionsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$challenge_submissionsPayload>
+          }
+          findFirst: {
+            args: Prisma.challenge_submissionsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$challenge_submissionsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.challenge_submissionsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$challenge_submissionsPayload>
+          }
+          findMany: {
+            args: Prisma.challenge_submissionsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$challenge_submissionsPayload>[]
+          }
+          create: {
+            args: Prisma.challenge_submissionsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$challenge_submissionsPayload>
+          }
+          createMany: {
+            args: Prisma.challenge_submissionsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.challenge_submissionsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$challenge_submissionsPayload>[]
+          }
+          delete: {
+            args: Prisma.challenge_submissionsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$challenge_submissionsPayload>
+          }
+          update: {
+            args: Prisma.challenge_submissionsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$challenge_submissionsPayload>
+          }
+          deleteMany: {
+            args: Prisma.challenge_submissionsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.challenge_submissionsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.challenge_submissionsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$challenge_submissionsPayload>[]
+          }
+          upsert: {
+            args: Prisma.challenge_submissionsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$challenge_submissionsPayload>
+          }
+          aggregate: {
+            args: Prisma.Challenge_submissionsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChallenge_submissions>
+          }
+          groupBy: {
+            args: Prisma.challenge_submissionsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Challenge_submissionsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.challenge_submissionsCountArgs<ExtArgs>
+            result: $Utils.Optional<Challenge_submissionsCountAggregateOutputType> | number
+          }
+        }
+      }
+      profile: {
+        payload: Prisma.$profilePayload<ExtArgs>
+        fields: Prisma.profileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.profileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$profilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.profileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$profilePayload>
+          }
+          findFirst: {
+            args: Prisma.profileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$profilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.profileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$profilePayload>
+          }
+          findMany: {
+            args: Prisma.profileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$profilePayload>[]
+          }
+          create: {
+            args: Prisma.profileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$profilePayload>
+          }
+          createMany: {
+            args: Prisma.profileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.profileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$profilePayload>[]
+          }
+          delete: {
+            args: Prisma.profileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$profilePayload>
+          }
+          update: {
+            args: Prisma.profileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$profilePayload>
+          }
+          deleteMany: {
+            args: Prisma.profileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.profileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.profileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$profilePayload>[]
+          }
+          upsert: {
+            args: Prisma.profileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$profilePayload>
+          }
+          aggregate: {
+            args: Prisma.ProfileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProfile>
+          }
+          groupBy: {
+            args: Prisma.profileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProfileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.profileCountArgs<ExtArgs>
+            result: $Utils.Optional<ProfileCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -979,6 +1172,8 @@ export namespace Prisma {
     challenges?: challengesOmit
     open_challenges?: open_challengesOmit
     targeted_challenges?: targeted_challengesOmit
+    challenge_submissions?: challenge_submissionsOmit
+    profile?: profileOmit
   }
 
   /* Types for Logging */
@@ -1054,6 +1249,76 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type ChallengesCountOutputType
+   */
+
+  export type ChallengesCountOutputType = {
+    challenge_submissions: number
+  }
+
+  export type ChallengesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    challenge_submissions?: boolean | ChallengesCountOutputTypeCountChallenge_submissionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ChallengesCountOutputType without action
+   */
+  export type ChallengesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengesCountOutputType
+     */
+    select?: ChallengesCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ChallengesCountOutputType without action
+   */
+  export type ChallengesCountOutputTypeCountChallenge_submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: challenge_submissionsWhereInput
+  }
+
+
+  /**
+   * Count Type ProfileCountOutputType
+   */
+
+  export type ProfileCountOutputType = {
+    challenge_submissions: number
+    challenges: number
+  }
+
+  export type ProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    challenge_submissions?: boolean | ProfileCountOutputTypeCountChallenge_submissionsArgs
+    challenges?: boolean | ProfileCountOutputTypeCountChallengesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileCountOutputType
+     */
+    select?: ProfileCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountChallenge_submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: challenge_submissionsWhereInput
+  }
+
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountChallengesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: challengesWhereInput
+  }
+
 
   /**
    * Models
@@ -1085,6 +1350,7 @@ export namespace Prisma {
     c_description: string | null
     title: string | null
     time_created: Date | null
+    creator_id: string | null
   }
 
   export type ChallengesMaxAggregateOutputType = {
@@ -1093,6 +1359,7 @@ export namespace Prisma {
     c_description: string | null
     title: string | null
     time_created: Date | null
+    creator_id: string | null
   }
 
   export type ChallengesCountAggregateOutputType = {
@@ -1101,6 +1368,7 @@ export namespace Prisma {
     c_description: number
     title: number
     time_created: number
+    creator_id: number
     _all: number
   }
 
@@ -1119,6 +1387,7 @@ export namespace Prisma {
     c_description?: true
     title?: true
     time_created?: true
+    creator_id?: true
   }
 
   export type ChallengesMaxAggregateInputType = {
@@ -1127,6 +1396,7 @@ export namespace Prisma {
     c_description?: true
     title?: true
     time_created?: true
+    creator_id?: true
   }
 
   export type ChallengesCountAggregateInputType = {
@@ -1135,6 +1405,7 @@ export namespace Prisma {
     c_description?: true
     title?: true
     time_created?: true
+    creator_id?: true
     _all?: true
   }
 
@@ -1230,6 +1501,7 @@ export namespace Prisma {
     c_description: string
     title: string
     time_created: Date
+    creator_id: string | null
     _count: ChallengesCountAggregateOutputType | null
     _avg: ChallengesAvgAggregateOutputType | null
     _sum: ChallengesSumAggregateOutputType | null
@@ -1257,8 +1529,12 @@ export namespace Prisma {
     c_description?: boolean
     title?: boolean
     time_created?: boolean
+    creator_id?: boolean
+    challenge_submissions?: boolean | challenges$challenge_submissionsArgs<ExtArgs>
+    profile?: boolean | challenges$profileArgs<ExtArgs>
     open_challenges?: boolean | challenges$open_challengesArgs<ExtArgs>
     targeted_challenges?: boolean | challenges$targeted_challengesArgs<ExtArgs>
+    _count?: boolean | ChallengesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["challenges"]>
 
   export type challengesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1267,6 +1543,8 @@ export namespace Prisma {
     c_description?: boolean
     title?: boolean
     time_created?: boolean
+    creator_id?: boolean
+    profile?: boolean | challenges$profileArgs<ExtArgs>
   }, ExtArgs["result"]["challenges"]>
 
   export type challengesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1275,6 +1553,8 @@ export namespace Prisma {
     c_description?: boolean
     title?: boolean
     time_created?: boolean
+    creator_id?: boolean
+    profile?: boolean | challenges$profileArgs<ExtArgs>
   }, ExtArgs["result"]["challenges"]>
 
   export type challengesSelectScalar = {
@@ -1283,19 +1563,29 @@ export namespace Prisma {
     c_description?: boolean
     title?: boolean
     time_created?: boolean
+    creator_id?: boolean
   }
 
-  export type challengesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "c_target" | "c_description" | "title" | "time_created", ExtArgs["result"]["challenges"]>
+  export type challengesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "c_target" | "c_description" | "title" | "time_created" | "creator_id", ExtArgs["result"]["challenges"]>
   export type challengesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    challenge_submissions?: boolean | challenges$challenge_submissionsArgs<ExtArgs>
+    profile?: boolean | challenges$profileArgs<ExtArgs>
     open_challenges?: boolean | challenges$open_challengesArgs<ExtArgs>
     targeted_challenges?: boolean | challenges$targeted_challengesArgs<ExtArgs>
+    _count?: boolean | ChallengesCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type challengesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type challengesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type challengesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    profile?: boolean | challenges$profileArgs<ExtArgs>
+  }
+  export type challengesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    profile?: boolean | challenges$profileArgs<ExtArgs>
+  }
 
   export type $challengesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "challenges"
     objects: {
+      challenge_submissions: Prisma.$challenge_submissionsPayload<ExtArgs>[]
+      profile: Prisma.$profilePayload<ExtArgs> | null
       open_challenges: Prisma.$open_challengesPayload<ExtArgs> | null
       targeted_challenges: Prisma.$targeted_challengesPayload<ExtArgs> | null
     }
@@ -1305,6 +1595,7 @@ export namespace Prisma {
       c_description: string
       title: string
       time_created: Date
+      creator_id: string | null
     }, ExtArgs["result"]["challenges"]>
     composites: {}
   }
@@ -1699,6 +1990,8 @@ export namespace Prisma {
    */
   export interface Prisma__challengesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    challenge_submissions<T extends challenges$challenge_submissionsArgs<ExtArgs> = {}>(args?: Subset<T, challenges$challenge_submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    profile<T extends challenges$profileArgs<ExtArgs> = {}>(args?: Subset<T, challenges$profileArgs<ExtArgs>>): Prisma__profileClient<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     open_challenges<T extends challenges$open_challengesArgs<ExtArgs> = {}>(args?: Subset<T, challenges$open_challengesArgs<ExtArgs>>): Prisma__open_challengesClient<$Result.GetResult<Prisma.$open_challengesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     targeted_challenges<T extends challenges$targeted_challengesArgs<ExtArgs> = {}>(args?: Subset<T, challenges$targeted_challengesArgs<ExtArgs>>): Prisma__targeted_challengesClient<$Result.GetResult<Prisma.$targeted_challengesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
@@ -1735,6 +2028,7 @@ export namespace Prisma {
     readonly c_description: FieldRef<"challenges", 'String'>
     readonly title: FieldRef<"challenges", 'String'>
     readonly time_created: FieldRef<"challenges", 'DateTime'>
+    readonly creator_id: FieldRef<"challenges", 'String'>
   }
     
 
@@ -1984,6 +2278,10 @@ export namespace Prisma {
      */
     data: challengesCreateManyInput | challengesCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challengesIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -2054,6 +2352,10 @@ export namespace Prisma {
      * Limit how many challenges to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challengesIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -2120,6 +2422,49 @@ export namespace Prisma {
      * Limit how many challenges to delete.
      */
     limit?: number
+  }
+
+  /**
+   * challenges.challenge_submissions
+   */
+  export type challenges$challenge_submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+    where?: challenge_submissionsWhereInput
+    orderBy?: challenge_submissionsOrderByWithRelationInput | challenge_submissionsOrderByWithRelationInput[]
+    cursor?: challenge_submissionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Challenge_submissionsScalarFieldEnum | Challenge_submissionsScalarFieldEnum[]
+  }
+
+  /**
+   * challenges.profile
+   */
+  export type challenges$profileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: profileInclude<ExtArgs> | null
+    where?: profileWhereInput
   }
 
   /**
@@ -4324,6 +4669,2281 @@ export namespace Prisma {
 
 
   /**
+   * Model challenge_submissions
+   */
+
+  export type AggregateChallenge_submissions = {
+    _count: Challenge_submissionsCountAggregateOutputType | null
+    _avg: Challenge_submissionsAvgAggregateOutputType | null
+    _sum: Challenge_submissionsSumAggregateOutputType | null
+    _min: Challenge_submissionsMinAggregateOutputType | null
+    _max: Challenge_submissionsMaxAggregateOutputType | null
+  }
+
+  export type Challenge_submissionsAvgAggregateOutputType = {
+    id: number | null
+    challenge_id: number | null
+  }
+
+  export type Challenge_submissionsSumAggregateOutputType = {
+    id: number | null
+    challenge_id: number | null
+  }
+
+  export type Challenge_submissionsMinAggregateOutputType = {
+    id: number | null
+    user_id: string | null
+    challenge_id: number | null
+    submission_data: string | null
+    time_submitted: Date | null
+  }
+
+  export type Challenge_submissionsMaxAggregateOutputType = {
+    id: number | null
+    user_id: string | null
+    challenge_id: number | null
+    submission_data: string | null
+    time_submitted: Date | null
+  }
+
+  export type Challenge_submissionsCountAggregateOutputType = {
+    id: number
+    user_id: number
+    challenge_id: number
+    submission_data: number
+    time_submitted: number
+    _all: number
+  }
+
+
+  export type Challenge_submissionsAvgAggregateInputType = {
+    id?: true
+    challenge_id?: true
+  }
+
+  export type Challenge_submissionsSumAggregateInputType = {
+    id?: true
+    challenge_id?: true
+  }
+
+  export type Challenge_submissionsMinAggregateInputType = {
+    id?: true
+    user_id?: true
+    challenge_id?: true
+    submission_data?: true
+    time_submitted?: true
+  }
+
+  export type Challenge_submissionsMaxAggregateInputType = {
+    id?: true
+    user_id?: true
+    challenge_id?: true
+    submission_data?: true
+    time_submitted?: true
+  }
+
+  export type Challenge_submissionsCountAggregateInputType = {
+    id?: true
+    user_id?: true
+    challenge_id?: true
+    submission_data?: true
+    time_submitted?: true
+    _all?: true
+  }
+
+  export type Challenge_submissionsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which challenge_submissions to aggregate.
+     */
+    where?: challenge_submissionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of challenge_submissions to fetch.
+     */
+    orderBy?: challenge_submissionsOrderByWithRelationInput | challenge_submissionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: challenge_submissionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` challenge_submissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` challenge_submissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned challenge_submissions
+    **/
+    _count?: true | Challenge_submissionsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Challenge_submissionsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Challenge_submissionsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Challenge_submissionsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Challenge_submissionsMaxAggregateInputType
+  }
+
+  export type GetChallenge_submissionsAggregateType<T extends Challenge_submissionsAggregateArgs> = {
+        [P in keyof T & keyof AggregateChallenge_submissions]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChallenge_submissions[P]>
+      : GetScalarType<T[P], AggregateChallenge_submissions[P]>
+  }
+
+
+
+
+  export type challenge_submissionsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: challenge_submissionsWhereInput
+    orderBy?: challenge_submissionsOrderByWithAggregationInput | challenge_submissionsOrderByWithAggregationInput[]
+    by: Challenge_submissionsScalarFieldEnum[] | Challenge_submissionsScalarFieldEnum
+    having?: challenge_submissionsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Challenge_submissionsCountAggregateInputType | true
+    _avg?: Challenge_submissionsAvgAggregateInputType
+    _sum?: Challenge_submissionsSumAggregateInputType
+    _min?: Challenge_submissionsMinAggregateInputType
+    _max?: Challenge_submissionsMaxAggregateInputType
+  }
+
+  export type Challenge_submissionsGroupByOutputType = {
+    id: number
+    user_id: string
+    challenge_id: number
+    submission_data: string | null
+    time_submitted: Date
+    _count: Challenge_submissionsCountAggregateOutputType | null
+    _avg: Challenge_submissionsAvgAggregateOutputType | null
+    _sum: Challenge_submissionsSumAggregateOutputType | null
+    _min: Challenge_submissionsMinAggregateOutputType | null
+    _max: Challenge_submissionsMaxAggregateOutputType | null
+  }
+
+  type GetChallenge_submissionsGroupByPayload<T extends challenge_submissionsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Challenge_submissionsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Challenge_submissionsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Challenge_submissionsGroupByOutputType[P]>
+            : GetScalarType<T[P], Challenge_submissionsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type challenge_submissionsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    challenge_id?: boolean
+    submission_data?: boolean
+    time_submitted?: boolean
+    challenges?: boolean | challengesDefaultArgs<ExtArgs>
+    profile?: boolean | profileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["challenge_submissions"]>
+
+  export type challenge_submissionsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    challenge_id?: boolean
+    submission_data?: boolean
+    time_submitted?: boolean
+    challenges?: boolean | challengesDefaultArgs<ExtArgs>
+    profile?: boolean | profileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["challenge_submissions"]>
+
+  export type challenge_submissionsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    challenge_id?: boolean
+    submission_data?: boolean
+    time_submitted?: boolean
+    challenges?: boolean | challengesDefaultArgs<ExtArgs>
+    profile?: boolean | profileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["challenge_submissions"]>
+
+  export type challenge_submissionsSelectScalar = {
+    id?: boolean
+    user_id?: boolean
+    challenge_id?: boolean
+    submission_data?: boolean
+    time_submitted?: boolean
+  }
+
+  export type challenge_submissionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "challenge_id" | "submission_data" | "time_submitted", ExtArgs["result"]["challenge_submissions"]>
+  export type challenge_submissionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    challenges?: boolean | challengesDefaultArgs<ExtArgs>
+    profile?: boolean | profileDefaultArgs<ExtArgs>
+  }
+  export type challenge_submissionsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    challenges?: boolean | challengesDefaultArgs<ExtArgs>
+    profile?: boolean | profileDefaultArgs<ExtArgs>
+  }
+  export type challenge_submissionsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    challenges?: boolean | challengesDefaultArgs<ExtArgs>
+    profile?: boolean | profileDefaultArgs<ExtArgs>
+  }
+
+  export type $challenge_submissionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "challenge_submissions"
+    objects: {
+      challenges: Prisma.$challengesPayload<ExtArgs>
+      profile: Prisma.$profilePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      user_id: string
+      challenge_id: number
+      submission_data: string | null
+      time_submitted: Date
+    }, ExtArgs["result"]["challenge_submissions"]>
+    composites: {}
+  }
+
+  type challenge_submissionsGetPayload<S extends boolean | null | undefined | challenge_submissionsDefaultArgs> = $Result.GetResult<Prisma.$challenge_submissionsPayload, S>
+
+  type challenge_submissionsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<challenge_submissionsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Challenge_submissionsCountAggregateInputType | true
+    }
+
+  export interface challenge_submissionsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['challenge_submissions'], meta: { name: 'challenge_submissions' } }
+    /**
+     * Find zero or one Challenge_submissions that matches the filter.
+     * @param {challenge_submissionsFindUniqueArgs} args - Arguments to find a Challenge_submissions
+     * @example
+     * // Get one Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends challenge_submissionsFindUniqueArgs>(args: SelectSubset<T, challenge_submissionsFindUniqueArgs<ExtArgs>>): Prisma__challenge_submissionsClient<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Challenge_submissions that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {challenge_submissionsFindUniqueOrThrowArgs} args - Arguments to find a Challenge_submissions
+     * @example
+     * // Get one Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends challenge_submissionsFindUniqueOrThrowArgs>(args: SelectSubset<T, challenge_submissionsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__challenge_submissionsClient<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Challenge_submissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {challenge_submissionsFindFirstArgs} args - Arguments to find a Challenge_submissions
+     * @example
+     * // Get one Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends challenge_submissionsFindFirstArgs>(args?: SelectSubset<T, challenge_submissionsFindFirstArgs<ExtArgs>>): Prisma__challenge_submissionsClient<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Challenge_submissions that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {challenge_submissionsFindFirstOrThrowArgs} args - Arguments to find a Challenge_submissions
+     * @example
+     * // Get one Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends challenge_submissionsFindFirstOrThrowArgs>(args?: SelectSubset<T, challenge_submissionsFindFirstOrThrowArgs<ExtArgs>>): Prisma__challenge_submissionsClient<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Challenge_submissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {challenge_submissionsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.findMany()
+     * 
+     * // Get first 10 Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const challenge_submissionsWithIdOnly = await prisma.challenge_submissions.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends challenge_submissionsFindManyArgs>(args?: SelectSubset<T, challenge_submissionsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Challenge_submissions.
+     * @param {challenge_submissionsCreateArgs} args - Arguments to create a Challenge_submissions.
+     * @example
+     * // Create one Challenge_submissions
+     * const Challenge_submissions = await prisma.challenge_submissions.create({
+     *   data: {
+     *     // ... data to create a Challenge_submissions
+     *   }
+     * })
+     * 
+     */
+    create<T extends challenge_submissionsCreateArgs>(args: SelectSubset<T, challenge_submissionsCreateArgs<ExtArgs>>): Prisma__challenge_submissionsClient<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Challenge_submissions.
+     * @param {challenge_submissionsCreateManyArgs} args - Arguments to create many Challenge_submissions.
+     * @example
+     * // Create many Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends challenge_submissionsCreateManyArgs>(args?: SelectSubset<T, challenge_submissionsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Challenge_submissions and returns the data saved in the database.
+     * @param {challenge_submissionsCreateManyAndReturnArgs} args - Arguments to create many Challenge_submissions.
+     * @example
+     * // Create many Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Challenge_submissions and only return the `id`
+     * const challenge_submissionsWithIdOnly = await prisma.challenge_submissions.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends challenge_submissionsCreateManyAndReturnArgs>(args?: SelectSubset<T, challenge_submissionsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Challenge_submissions.
+     * @param {challenge_submissionsDeleteArgs} args - Arguments to delete one Challenge_submissions.
+     * @example
+     * // Delete one Challenge_submissions
+     * const Challenge_submissions = await prisma.challenge_submissions.delete({
+     *   where: {
+     *     // ... filter to delete one Challenge_submissions
+     *   }
+     * })
+     * 
+     */
+    delete<T extends challenge_submissionsDeleteArgs>(args: SelectSubset<T, challenge_submissionsDeleteArgs<ExtArgs>>): Prisma__challenge_submissionsClient<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Challenge_submissions.
+     * @param {challenge_submissionsUpdateArgs} args - Arguments to update one Challenge_submissions.
+     * @example
+     * // Update one Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends challenge_submissionsUpdateArgs>(args: SelectSubset<T, challenge_submissionsUpdateArgs<ExtArgs>>): Prisma__challenge_submissionsClient<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Challenge_submissions.
+     * @param {challenge_submissionsDeleteManyArgs} args - Arguments to filter Challenge_submissions to delete.
+     * @example
+     * // Delete a few Challenge_submissions
+     * const { count } = await prisma.challenge_submissions.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends challenge_submissionsDeleteManyArgs>(args?: SelectSubset<T, challenge_submissionsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Challenge_submissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {challenge_submissionsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends challenge_submissionsUpdateManyArgs>(args: SelectSubset<T, challenge_submissionsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Challenge_submissions and returns the data updated in the database.
+     * @param {challenge_submissionsUpdateManyAndReturnArgs} args - Arguments to update many Challenge_submissions.
+     * @example
+     * // Update many Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Challenge_submissions and only return the `id`
+     * const challenge_submissionsWithIdOnly = await prisma.challenge_submissions.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends challenge_submissionsUpdateManyAndReturnArgs>(args: SelectSubset<T, challenge_submissionsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Challenge_submissions.
+     * @param {challenge_submissionsUpsertArgs} args - Arguments to update or create a Challenge_submissions.
+     * @example
+     * // Update or create a Challenge_submissions
+     * const challenge_submissions = await prisma.challenge_submissions.upsert({
+     *   create: {
+     *     // ... data to create a Challenge_submissions
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Challenge_submissions we want to update
+     *   }
+     * })
+     */
+    upsert<T extends challenge_submissionsUpsertArgs>(args: SelectSubset<T, challenge_submissionsUpsertArgs<ExtArgs>>): Prisma__challenge_submissionsClient<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Challenge_submissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {challenge_submissionsCountArgs} args - Arguments to filter Challenge_submissions to count.
+     * @example
+     * // Count the number of Challenge_submissions
+     * const count = await prisma.challenge_submissions.count({
+     *   where: {
+     *     // ... the filter for the Challenge_submissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends challenge_submissionsCountArgs>(
+      args?: Subset<T, challenge_submissionsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Challenge_submissionsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Challenge_submissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Challenge_submissionsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Challenge_submissionsAggregateArgs>(args: Subset<T, Challenge_submissionsAggregateArgs>): Prisma.PrismaPromise<GetChallenge_submissionsAggregateType<T>>
+
+    /**
+     * Group by Challenge_submissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {challenge_submissionsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends challenge_submissionsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: challenge_submissionsGroupByArgs['orderBy'] }
+        : { orderBy?: challenge_submissionsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, challenge_submissionsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChallenge_submissionsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the challenge_submissions model
+   */
+  readonly fields: challenge_submissionsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for challenge_submissions.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__challenge_submissionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    challenges<T extends challengesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, challengesDefaultArgs<ExtArgs>>): Prisma__challengesClient<$Result.GetResult<Prisma.$challengesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    profile<T extends profileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, profileDefaultArgs<ExtArgs>>): Prisma__profileClient<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the challenge_submissions model
+   */
+  interface challenge_submissionsFieldRefs {
+    readonly id: FieldRef<"challenge_submissions", 'Int'>
+    readonly user_id: FieldRef<"challenge_submissions", 'String'>
+    readonly challenge_id: FieldRef<"challenge_submissions", 'Int'>
+    readonly submission_data: FieldRef<"challenge_submissions", 'String'>
+    readonly time_submitted: FieldRef<"challenge_submissions", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * challenge_submissions findUnique
+   */
+  export type challenge_submissionsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+    /**
+     * Filter, which challenge_submissions to fetch.
+     */
+    where: challenge_submissionsWhereUniqueInput
+  }
+
+  /**
+   * challenge_submissions findUniqueOrThrow
+   */
+  export type challenge_submissionsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+    /**
+     * Filter, which challenge_submissions to fetch.
+     */
+    where: challenge_submissionsWhereUniqueInput
+  }
+
+  /**
+   * challenge_submissions findFirst
+   */
+  export type challenge_submissionsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+    /**
+     * Filter, which challenge_submissions to fetch.
+     */
+    where?: challenge_submissionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of challenge_submissions to fetch.
+     */
+    orderBy?: challenge_submissionsOrderByWithRelationInput | challenge_submissionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for challenge_submissions.
+     */
+    cursor?: challenge_submissionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` challenge_submissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` challenge_submissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of challenge_submissions.
+     */
+    distinct?: Challenge_submissionsScalarFieldEnum | Challenge_submissionsScalarFieldEnum[]
+  }
+
+  /**
+   * challenge_submissions findFirstOrThrow
+   */
+  export type challenge_submissionsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+    /**
+     * Filter, which challenge_submissions to fetch.
+     */
+    where?: challenge_submissionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of challenge_submissions to fetch.
+     */
+    orderBy?: challenge_submissionsOrderByWithRelationInput | challenge_submissionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for challenge_submissions.
+     */
+    cursor?: challenge_submissionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` challenge_submissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` challenge_submissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of challenge_submissions.
+     */
+    distinct?: Challenge_submissionsScalarFieldEnum | Challenge_submissionsScalarFieldEnum[]
+  }
+
+  /**
+   * challenge_submissions findMany
+   */
+  export type challenge_submissionsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+    /**
+     * Filter, which challenge_submissions to fetch.
+     */
+    where?: challenge_submissionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of challenge_submissions to fetch.
+     */
+    orderBy?: challenge_submissionsOrderByWithRelationInput | challenge_submissionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing challenge_submissions.
+     */
+    cursor?: challenge_submissionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` challenge_submissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` challenge_submissions.
+     */
+    skip?: number
+    distinct?: Challenge_submissionsScalarFieldEnum | Challenge_submissionsScalarFieldEnum[]
+  }
+
+  /**
+   * challenge_submissions create
+   */
+  export type challenge_submissionsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a challenge_submissions.
+     */
+    data: XOR<challenge_submissionsCreateInput, challenge_submissionsUncheckedCreateInput>
+  }
+
+  /**
+   * challenge_submissions createMany
+   */
+  export type challenge_submissionsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many challenge_submissions.
+     */
+    data: challenge_submissionsCreateManyInput | challenge_submissionsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * challenge_submissions createManyAndReturn
+   */
+  export type challenge_submissionsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * The data used to create many challenge_submissions.
+     */
+    data: challenge_submissionsCreateManyInput | challenge_submissionsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * challenge_submissions update
+   */
+  export type challenge_submissionsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a challenge_submissions.
+     */
+    data: XOR<challenge_submissionsUpdateInput, challenge_submissionsUncheckedUpdateInput>
+    /**
+     * Choose, which challenge_submissions to update.
+     */
+    where: challenge_submissionsWhereUniqueInput
+  }
+
+  /**
+   * challenge_submissions updateMany
+   */
+  export type challenge_submissionsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update challenge_submissions.
+     */
+    data: XOR<challenge_submissionsUpdateManyMutationInput, challenge_submissionsUncheckedUpdateManyInput>
+    /**
+     * Filter which challenge_submissions to update
+     */
+    where?: challenge_submissionsWhereInput
+    /**
+     * Limit how many challenge_submissions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * challenge_submissions updateManyAndReturn
+   */
+  export type challenge_submissionsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * The data used to update challenge_submissions.
+     */
+    data: XOR<challenge_submissionsUpdateManyMutationInput, challenge_submissionsUncheckedUpdateManyInput>
+    /**
+     * Filter which challenge_submissions to update
+     */
+    where?: challenge_submissionsWhereInput
+    /**
+     * Limit how many challenge_submissions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * challenge_submissions upsert
+   */
+  export type challenge_submissionsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the challenge_submissions to update in case it exists.
+     */
+    where: challenge_submissionsWhereUniqueInput
+    /**
+     * In case the challenge_submissions found by the `where` argument doesn't exist, create a new challenge_submissions with this data.
+     */
+    create: XOR<challenge_submissionsCreateInput, challenge_submissionsUncheckedCreateInput>
+    /**
+     * In case the challenge_submissions was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<challenge_submissionsUpdateInput, challenge_submissionsUncheckedUpdateInput>
+  }
+
+  /**
+   * challenge_submissions delete
+   */
+  export type challenge_submissionsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+    /**
+     * Filter which challenge_submissions to delete.
+     */
+    where: challenge_submissionsWhereUniqueInput
+  }
+
+  /**
+   * challenge_submissions deleteMany
+   */
+  export type challenge_submissionsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which challenge_submissions to delete
+     */
+    where?: challenge_submissionsWhereInput
+    /**
+     * Limit how many challenge_submissions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * challenge_submissions without action
+   */
+  export type challenge_submissionsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model profile
+   */
+
+  export type AggregateProfile = {
+    _count: ProfileCountAggregateOutputType | null
+    _avg: ProfileAvgAggregateOutputType | null
+    _sum: ProfileSumAggregateOutputType | null
+    _min: ProfileMinAggregateOutputType | null
+    _max: ProfileMaxAggregateOutputType | null
+  }
+
+  export type ProfileAvgAggregateOutputType = {
+    coins: number | null
+  }
+
+  export type ProfileSumAggregateOutputType = {
+    coins: number | null
+  }
+
+  export type ProfileMinAggregateOutputType = {
+    profile_id: string | null
+    first_name: string | null
+    last_name: string | null
+    coins: number | null
+    phone_number: string | null
+    email: string | null
+    date_of_birth: Date | null
+    gender: $Enums.gender_type | null
+  }
+
+  export type ProfileMaxAggregateOutputType = {
+    profile_id: string | null
+    first_name: string | null
+    last_name: string | null
+    coins: number | null
+    phone_number: string | null
+    email: string | null
+    date_of_birth: Date | null
+    gender: $Enums.gender_type | null
+  }
+
+  export type ProfileCountAggregateOutputType = {
+    profile_id: number
+    first_name: number
+    last_name: number
+    coins: number
+    phone_number: number
+    email: number
+    date_of_birth: number
+    gender: number
+    _all: number
+  }
+
+
+  export type ProfileAvgAggregateInputType = {
+    coins?: true
+  }
+
+  export type ProfileSumAggregateInputType = {
+    coins?: true
+  }
+
+  export type ProfileMinAggregateInputType = {
+    profile_id?: true
+    first_name?: true
+    last_name?: true
+    coins?: true
+    phone_number?: true
+    email?: true
+    date_of_birth?: true
+    gender?: true
+  }
+
+  export type ProfileMaxAggregateInputType = {
+    profile_id?: true
+    first_name?: true
+    last_name?: true
+    coins?: true
+    phone_number?: true
+    email?: true
+    date_of_birth?: true
+    gender?: true
+  }
+
+  export type ProfileCountAggregateInputType = {
+    profile_id?: true
+    first_name?: true
+    last_name?: true
+    coins?: true
+    phone_number?: true
+    email?: true
+    date_of_birth?: true
+    gender?: true
+    _all?: true
+  }
+
+  export type ProfileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which profile to aggregate.
+     */
+    where?: profileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of profiles to fetch.
+     */
+    orderBy?: profileOrderByWithRelationInput | profileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: profileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` profiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned profiles
+    **/
+    _count?: true | ProfileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProfileAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProfileSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProfileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProfileMaxAggregateInputType
+  }
+
+  export type GetProfileAggregateType<T extends ProfileAggregateArgs> = {
+        [P in keyof T & keyof AggregateProfile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProfile[P]>
+      : GetScalarType<T[P], AggregateProfile[P]>
+  }
+
+
+
+
+  export type profileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: profileWhereInput
+    orderBy?: profileOrderByWithAggregationInput | profileOrderByWithAggregationInput[]
+    by: ProfileScalarFieldEnum[] | ProfileScalarFieldEnum
+    having?: profileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProfileCountAggregateInputType | true
+    _avg?: ProfileAvgAggregateInputType
+    _sum?: ProfileSumAggregateInputType
+    _min?: ProfileMinAggregateInputType
+    _max?: ProfileMaxAggregateInputType
+  }
+
+  export type ProfileGroupByOutputType = {
+    profile_id: string
+    first_name: string
+    last_name: string
+    coins: number
+    phone_number: string
+    email: string
+    date_of_birth: Date
+    gender: $Enums.gender_type
+    _count: ProfileCountAggregateOutputType | null
+    _avg: ProfileAvgAggregateOutputType | null
+    _sum: ProfileSumAggregateOutputType | null
+    _min: ProfileMinAggregateOutputType | null
+    _max: ProfileMaxAggregateOutputType | null
+  }
+
+  type GetProfileGroupByPayload<T extends profileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProfileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProfileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProfileGroupByOutputType[P]>
+            : GetScalarType<T[P], ProfileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type profileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    profile_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    coins?: boolean
+    phone_number?: boolean
+    email?: boolean
+    date_of_birth?: boolean
+    gender?: boolean
+    challenge_submissions?: boolean | profile$challenge_submissionsArgs<ExtArgs>
+    challenges?: boolean | profile$challengesArgs<ExtArgs>
+    _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["profile"]>
+
+  export type profileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    profile_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    coins?: boolean
+    phone_number?: boolean
+    email?: boolean
+    date_of_birth?: boolean
+    gender?: boolean
+  }, ExtArgs["result"]["profile"]>
+
+  export type profileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    profile_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    coins?: boolean
+    phone_number?: boolean
+    email?: boolean
+    date_of_birth?: boolean
+    gender?: boolean
+  }, ExtArgs["result"]["profile"]>
+
+  export type profileSelectScalar = {
+    profile_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    coins?: boolean
+    phone_number?: boolean
+    email?: boolean
+    date_of_birth?: boolean
+    gender?: boolean
+  }
+
+  export type profileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"profile_id" | "first_name" | "last_name" | "coins" | "phone_number" | "email" | "date_of_birth" | "gender", ExtArgs["result"]["profile"]>
+  export type profileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    challenge_submissions?: boolean | profile$challenge_submissionsArgs<ExtArgs>
+    challenges?: boolean | profile$challengesArgs<ExtArgs>
+    _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type profileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type profileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $profilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "profile"
+    objects: {
+      challenge_submissions: Prisma.$challenge_submissionsPayload<ExtArgs>[]
+      challenges: Prisma.$challengesPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      profile_id: string
+      first_name: string
+      last_name: string
+      coins: number
+      phone_number: string
+      email: string
+      date_of_birth: Date
+      gender: $Enums.gender_type
+    }, ExtArgs["result"]["profile"]>
+    composites: {}
+  }
+
+  type profileGetPayload<S extends boolean | null | undefined | profileDefaultArgs> = $Result.GetResult<Prisma.$profilePayload, S>
+
+  type profileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<profileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProfileCountAggregateInputType | true
+    }
+
+  export interface profileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['profile'], meta: { name: 'profile' } }
+    /**
+     * Find zero or one Profile that matches the filter.
+     * @param {profileFindUniqueArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends profileFindUniqueArgs>(args: SelectSubset<T, profileFindUniqueArgs<ExtArgs>>): Prisma__profileClient<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Profile that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {profileFindUniqueOrThrowArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends profileFindUniqueOrThrowArgs>(args: SelectSubset<T, profileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__profileClient<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Profile that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {profileFindFirstArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends profileFindFirstArgs>(args?: SelectSubset<T, profileFindFirstArgs<ExtArgs>>): Prisma__profileClient<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Profile that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {profileFindFirstOrThrowArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends profileFindFirstOrThrowArgs>(args?: SelectSubset<T, profileFindFirstOrThrowArgs<ExtArgs>>): Prisma__profileClient<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Profiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {profileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Profiles
+     * const profiles = await prisma.profile.findMany()
+     * 
+     * // Get first 10 Profiles
+     * const profiles = await prisma.profile.findMany({ take: 10 })
+     * 
+     * // Only select the `profile_id`
+     * const profileWithProfile_idOnly = await prisma.profile.findMany({ select: { profile_id: true } })
+     * 
+     */
+    findMany<T extends profileFindManyArgs>(args?: SelectSubset<T, profileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Profile.
+     * @param {profileCreateArgs} args - Arguments to create a Profile.
+     * @example
+     * // Create one Profile
+     * const Profile = await prisma.profile.create({
+     *   data: {
+     *     // ... data to create a Profile
+     *   }
+     * })
+     * 
+     */
+    create<T extends profileCreateArgs>(args: SelectSubset<T, profileCreateArgs<ExtArgs>>): Prisma__profileClient<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Profiles.
+     * @param {profileCreateManyArgs} args - Arguments to create many Profiles.
+     * @example
+     * // Create many Profiles
+     * const profile = await prisma.profile.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends profileCreateManyArgs>(args?: SelectSubset<T, profileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Profiles and returns the data saved in the database.
+     * @param {profileCreateManyAndReturnArgs} args - Arguments to create many Profiles.
+     * @example
+     * // Create many Profiles
+     * const profile = await prisma.profile.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Profiles and only return the `profile_id`
+     * const profileWithProfile_idOnly = await prisma.profile.createManyAndReturn({
+     *   select: { profile_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends profileCreateManyAndReturnArgs>(args?: SelectSubset<T, profileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Profile.
+     * @param {profileDeleteArgs} args - Arguments to delete one Profile.
+     * @example
+     * // Delete one Profile
+     * const Profile = await prisma.profile.delete({
+     *   where: {
+     *     // ... filter to delete one Profile
+     *   }
+     * })
+     * 
+     */
+    delete<T extends profileDeleteArgs>(args: SelectSubset<T, profileDeleteArgs<ExtArgs>>): Prisma__profileClient<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Profile.
+     * @param {profileUpdateArgs} args - Arguments to update one Profile.
+     * @example
+     * // Update one Profile
+     * const profile = await prisma.profile.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends profileUpdateArgs>(args: SelectSubset<T, profileUpdateArgs<ExtArgs>>): Prisma__profileClient<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Profiles.
+     * @param {profileDeleteManyArgs} args - Arguments to filter Profiles to delete.
+     * @example
+     * // Delete a few Profiles
+     * const { count } = await prisma.profile.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends profileDeleteManyArgs>(args?: SelectSubset<T, profileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Profiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {profileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Profiles
+     * const profile = await prisma.profile.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends profileUpdateManyArgs>(args: SelectSubset<T, profileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Profiles and returns the data updated in the database.
+     * @param {profileUpdateManyAndReturnArgs} args - Arguments to update many Profiles.
+     * @example
+     * // Update many Profiles
+     * const profile = await prisma.profile.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Profiles and only return the `profile_id`
+     * const profileWithProfile_idOnly = await prisma.profile.updateManyAndReturn({
+     *   select: { profile_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends profileUpdateManyAndReturnArgs>(args: SelectSubset<T, profileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Profile.
+     * @param {profileUpsertArgs} args - Arguments to update or create a Profile.
+     * @example
+     * // Update or create a Profile
+     * const profile = await prisma.profile.upsert({
+     *   create: {
+     *     // ... data to create a Profile
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Profile we want to update
+     *   }
+     * })
+     */
+    upsert<T extends profileUpsertArgs>(args: SelectSubset<T, profileUpsertArgs<ExtArgs>>): Prisma__profileClient<$Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Profiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {profileCountArgs} args - Arguments to filter Profiles to count.
+     * @example
+     * // Count the number of Profiles
+     * const count = await prisma.profile.count({
+     *   where: {
+     *     // ... the filter for the Profiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends profileCountArgs>(
+      args?: Subset<T, profileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProfileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Profile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProfileAggregateArgs>(args: Subset<T, ProfileAggregateArgs>): Prisma.PrismaPromise<GetProfileAggregateType<T>>
+
+    /**
+     * Group by Profile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {profileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends profileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: profileGroupByArgs['orderBy'] }
+        : { orderBy?: profileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, profileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the profile model
+   */
+  readonly fields: profileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for profile.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__profileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    challenge_submissions<T extends profile$challenge_submissionsArgs<ExtArgs> = {}>(args?: Subset<T, profile$challenge_submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$challenge_submissionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    challenges<T extends profile$challengesArgs<ExtArgs> = {}>(args?: Subset<T, profile$challengesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$challengesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the profile model
+   */
+  interface profileFieldRefs {
+    readonly profile_id: FieldRef<"profile", 'String'>
+    readonly first_name: FieldRef<"profile", 'String'>
+    readonly last_name: FieldRef<"profile", 'String'>
+    readonly coins: FieldRef<"profile", 'Int'>
+    readonly phone_number: FieldRef<"profile", 'String'>
+    readonly email: FieldRef<"profile", 'String'>
+    readonly date_of_birth: FieldRef<"profile", 'DateTime'>
+    readonly gender: FieldRef<"profile", 'gender_type'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * profile findUnique
+   */
+  export type profileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: profileInclude<ExtArgs> | null
+    /**
+     * Filter, which profile to fetch.
+     */
+    where: profileWhereUniqueInput
+  }
+
+  /**
+   * profile findUniqueOrThrow
+   */
+  export type profileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: profileInclude<ExtArgs> | null
+    /**
+     * Filter, which profile to fetch.
+     */
+    where: profileWhereUniqueInput
+  }
+
+  /**
+   * profile findFirst
+   */
+  export type profileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: profileInclude<ExtArgs> | null
+    /**
+     * Filter, which profile to fetch.
+     */
+    where?: profileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of profiles to fetch.
+     */
+    orderBy?: profileOrderByWithRelationInput | profileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for profiles.
+     */
+    cursor?: profileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` profiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of profiles.
+     */
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
+  }
+
+  /**
+   * profile findFirstOrThrow
+   */
+  export type profileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: profileInclude<ExtArgs> | null
+    /**
+     * Filter, which profile to fetch.
+     */
+    where?: profileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of profiles to fetch.
+     */
+    orderBy?: profileOrderByWithRelationInput | profileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for profiles.
+     */
+    cursor?: profileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` profiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of profiles.
+     */
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
+  }
+
+  /**
+   * profile findMany
+   */
+  export type profileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: profileInclude<ExtArgs> | null
+    /**
+     * Filter, which profiles to fetch.
+     */
+    where?: profileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of profiles to fetch.
+     */
+    orderBy?: profileOrderByWithRelationInput | profileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing profiles.
+     */
+    cursor?: profileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` profiles.
+     */
+    skip?: number
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
+  }
+
+  /**
+   * profile create
+   */
+  export type profileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: profileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a profile.
+     */
+    data: XOR<profileCreateInput, profileUncheckedCreateInput>
+  }
+
+  /**
+   * profile createMany
+   */
+  export type profileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many profiles.
+     */
+    data: profileCreateManyInput | profileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * profile createManyAndReturn
+   */
+  export type profileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * The data used to create many profiles.
+     */
+    data: profileCreateManyInput | profileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * profile update
+   */
+  export type profileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: profileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a profile.
+     */
+    data: XOR<profileUpdateInput, profileUncheckedUpdateInput>
+    /**
+     * Choose, which profile to update.
+     */
+    where: profileWhereUniqueInput
+  }
+
+  /**
+   * profile updateMany
+   */
+  export type profileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update profiles.
+     */
+    data: XOR<profileUpdateManyMutationInput, profileUncheckedUpdateManyInput>
+    /**
+     * Filter which profiles to update
+     */
+    where?: profileWhereInput
+    /**
+     * Limit how many profiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * profile updateManyAndReturn
+   */
+  export type profileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * The data used to update profiles.
+     */
+    data: XOR<profileUpdateManyMutationInput, profileUncheckedUpdateManyInput>
+    /**
+     * Filter which profiles to update
+     */
+    where?: profileWhereInput
+    /**
+     * Limit how many profiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * profile upsert
+   */
+  export type profileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: profileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the profile to update in case it exists.
+     */
+    where: profileWhereUniqueInput
+    /**
+     * In case the profile found by the `where` argument doesn't exist, create a new profile with this data.
+     */
+    create: XOR<profileCreateInput, profileUncheckedCreateInput>
+    /**
+     * In case the profile was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<profileUpdateInput, profileUncheckedUpdateInput>
+  }
+
+  /**
+   * profile delete
+   */
+  export type profileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: profileInclude<ExtArgs> | null
+    /**
+     * Filter which profile to delete.
+     */
+    where: profileWhereUniqueInput
+  }
+
+  /**
+   * profile deleteMany
+   */
+  export type profileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which profiles to delete
+     */
+    where?: profileWhereInput
+    /**
+     * Limit how many profiles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * profile.challenge_submissions
+   */
+  export type profile$challenge_submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenge_submissions
+     */
+    select?: challenge_submissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenge_submissions
+     */
+    omit?: challenge_submissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challenge_submissionsInclude<ExtArgs> | null
+    where?: challenge_submissionsWhereInput
+    orderBy?: challenge_submissionsOrderByWithRelationInput | challenge_submissionsOrderByWithRelationInput[]
+    cursor?: challenge_submissionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Challenge_submissionsScalarFieldEnum | Challenge_submissionsScalarFieldEnum[]
+  }
+
+  /**
+   * profile.challenges
+   */
+  export type profile$challengesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the challenges
+     */
+    select?: challengesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the challenges
+     */
+    omit?: challengesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: challengesInclude<ExtArgs> | null
+    where?: challengesWhereInput
+    orderBy?: challengesOrderByWithRelationInput | challengesOrderByWithRelationInput[]
+    cursor?: challengesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChallengesScalarFieldEnum | ChallengesScalarFieldEnum[]
+  }
+
+  /**
+   * profile without action
+   */
+  export type profileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the profile
+     */
+    select?: profileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the profile
+     */
+    omit?: profileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: profileInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4342,7 +6962,8 @@ export namespace Prisma {
     c_target: 'c_target',
     c_description: 'c_description',
     title: 'title',
-    time_created: 'time_created'
+    time_created: 'time_created',
+    creator_id: 'creator_id'
   };
 
   export type ChallengesScalarFieldEnum = (typeof ChallengesScalarFieldEnum)[keyof typeof ChallengesScalarFieldEnum]
@@ -4366,6 +6987,31 @@ export namespace Prisma {
   export type Targeted_challengesScalarFieldEnum = (typeof Targeted_challengesScalarFieldEnum)[keyof typeof Targeted_challengesScalarFieldEnum]
 
 
+  export const Challenge_submissionsScalarFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    challenge_id: 'challenge_id',
+    submission_data: 'submission_data',
+    time_submitted: 'time_submitted'
+  };
+
+  export type Challenge_submissionsScalarFieldEnum = (typeof Challenge_submissionsScalarFieldEnum)[keyof typeof Challenge_submissionsScalarFieldEnum]
+
+
+  export const ProfileScalarFieldEnum: {
+    profile_id: 'profile_id',
+    first_name: 'first_name',
+    last_name: 'last_name',
+    coins: 'coins',
+    phone_number: 'phone_number',
+    email: 'email',
+    date_of_birth: 'date_of_birth',
+    gender: 'gender'
+  };
+
+  export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -4380,6 +7026,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -4444,6 +7098,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'gender_type'
+   */
+  export type Enumgender_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'gender_type'>
+    
+
+
+  /**
+   * Reference to a field of type 'gender_type[]'
+   */
+  export type ListEnumgender_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'gender_type[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4469,6 +7137,9 @@ export namespace Prisma {
     c_description?: StringFilter<"challenges"> | string
     title?: StringFilter<"challenges"> | string
     time_created?: DateTimeFilter<"challenges"> | Date | string
+    creator_id?: StringNullableFilter<"challenges"> | string | null
+    challenge_submissions?: Challenge_submissionsListRelationFilter
+    profile?: XOR<ProfileNullableScalarRelationFilter, profileWhereInput> | null
     open_challenges?: XOR<Open_challengesNullableScalarRelationFilter, open_challengesWhereInput> | null
     targeted_challenges?: XOR<Targeted_challengesNullableScalarRelationFilter, targeted_challengesWhereInput> | null
   }
@@ -4479,6 +7150,9 @@ export namespace Prisma {
     c_description?: SortOrder
     title?: SortOrder
     time_created?: SortOrder
+    creator_id?: SortOrderInput | SortOrder
+    challenge_submissions?: challenge_submissionsOrderByRelationAggregateInput
+    profile?: profileOrderByWithRelationInput
     open_challenges?: open_challengesOrderByWithRelationInput
     targeted_challenges?: targeted_challengesOrderByWithRelationInput
   }
@@ -4492,6 +7166,9 @@ export namespace Prisma {
     c_description?: StringFilter<"challenges"> | string
     title?: StringFilter<"challenges"> | string
     time_created?: DateTimeFilter<"challenges"> | Date | string
+    creator_id?: StringNullableFilter<"challenges"> | string | null
+    challenge_submissions?: Challenge_submissionsListRelationFilter
+    profile?: XOR<ProfileNullableScalarRelationFilter, profileWhereInput> | null
     open_challenges?: XOR<Open_challengesNullableScalarRelationFilter, open_challengesWhereInput> | null
     targeted_challenges?: XOR<Targeted_challengesNullableScalarRelationFilter, targeted_challengesWhereInput> | null
   }, "id">
@@ -4502,6 +7179,7 @@ export namespace Prisma {
     c_description?: SortOrder
     title?: SortOrder
     time_created?: SortOrder
+    creator_id?: SortOrderInput | SortOrder
     _count?: challengesCountOrderByAggregateInput
     _avg?: challengesAvgOrderByAggregateInput
     _max?: challengesMaxOrderByAggregateInput
@@ -4518,6 +7196,7 @@ export namespace Prisma {
     c_description?: StringWithAggregatesFilter<"challenges"> | string
     title?: StringWithAggregatesFilter<"challenges"> | string
     time_created?: DateTimeWithAggregatesFilter<"challenges"> | Date | string
+    creator_id?: StringNullableWithAggregatesFilter<"challenges"> | string | null
   }
 
   export type open_challengesWhereInput = {
@@ -4614,11 +7293,149 @@ export namespace Prisma {
     specific_target?: StringWithAggregatesFilter<"targeted_challenges"> | string
   }
 
+  export type challenge_submissionsWhereInput = {
+    AND?: challenge_submissionsWhereInput | challenge_submissionsWhereInput[]
+    OR?: challenge_submissionsWhereInput[]
+    NOT?: challenge_submissionsWhereInput | challenge_submissionsWhereInput[]
+    id?: IntFilter<"challenge_submissions"> | number
+    user_id?: StringFilter<"challenge_submissions"> | string
+    challenge_id?: IntFilter<"challenge_submissions"> | number
+    submission_data?: StringNullableFilter<"challenge_submissions"> | string | null
+    time_submitted?: DateTimeFilter<"challenge_submissions"> | Date | string
+    challenges?: XOR<ChallengesScalarRelationFilter, challengesWhereInput>
+    profile?: XOR<ProfileScalarRelationFilter, profileWhereInput>
+  }
+
+  export type challenge_submissionsOrderByWithRelationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    challenge_id?: SortOrder
+    submission_data?: SortOrderInput | SortOrder
+    time_submitted?: SortOrder
+    challenges?: challengesOrderByWithRelationInput
+    profile?: profileOrderByWithRelationInput
+  }
+
+  export type challenge_submissionsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    user_id_challenge_id?: challenge_submissionsUser_idChallenge_idCompoundUniqueInput
+    AND?: challenge_submissionsWhereInput | challenge_submissionsWhereInput[]
+    OR?: challenge_submissionsWhereInput[]
+    NOT?: challenge_submissionsWhereInput | challenge_submissionsWhereInput[]
+    user_id?: StringFilter<"challenge_submissions"> | string
+    challenge_id?: IntFilter<"challenge_submissions"> | number
+    submission_data?: StringNullableFilter<"challenge_submissions"> | string | null
+    time_submitted?: DateTimeFilter<"challenge_submissions"> | Date | string
+    challenges?: XOR<ChallengesScalarRelationFilter, challengesWhereInput>
+    profile?: XOR<ProfileScalarRelationFilter, profileWhereInput>
+  }, "id" | "user_id_challenge_id">
+
+  export type challenge_submissionsOrderByWithAggregationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    challenge_id?: SortOrder
+    submission_data?: SortOrderInput | SortOrder
+    time_submitted?: SortOrder
+    _count?: challenge_submissionsCountOrderByAggregateInput
+    _avg?: challenge_submissionsAvgOrderByAggregateInput
+    _max?: challenge_submissionsMaxOrderByAggregateInput
+    _min?: challenge_submissionsMinOrderByAggregateInput
+    _sum?: challenge_submissionsSumOrderByAggregateInput
+  }
+
+  export type challenge_submissionsScalarWhereWithAggregatesInput = {
+    AND?: challenge_submissionsScalarWhereWithAggregatesInput | challenge_submissionsScalarWhereWithAggregatesInput[]
+    OR?: challenge_submissionsScalarWhereWithAggregatesInput[]
+    NOT?: challenge_submissionsScalarWhereWithAggregatesInput | challenge_submissionsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"challenge_submissions"> | number
+    user_id?: StringWithAggregatesFilter<"challenge_submissions"> | string
+    challenge_id?: IntWithAggregatesFilter<"challenge_submissions"> | number
+    submission_data?: StringNullableWithAggregatesFilter<"challenge_submissions"> | string | null
+    time_submitted?: DateTimeWithAggregatesFilter<"challenge_submissions"> | Date | string
+  }
+
+  export type profileWhereInput = {
+    AND?: profileWhereInput | profileWhereInput[]
+    OR?: profileWhereInput[]
+    NOT?: profileWhereInput | profileWhereInput[]
+    profile_id?: StringFilter<"profile"> | string
+    first_name?: StringFilter<"profile"> | string
+    last_name?: StringFilter<"profile"> | string
+    coins?: IntFilter<"profile"> | number
+    phone_number?: StringFilter<"profile"> | string
+    email?: StringFilter<"profile"> | string
+    date_of_birth?: DateTimeFilter<"profile"> | Date | string
+    gender?: Enumgender_typeFilter<"profile"> | $Enums.gender_type
+    challenge_submissions?: Challenge_submissionsListRelationFilter
+    challenges?: ChallengesListRelationFilter
+  }
+
+  export type profileOrderByWithRelationInput = {
+    profile_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    coins?: SortOrder
+    phone_number?: SortOrder
+    email?: SortOrder
+    date_of_birth?: SortOrder
+    gender?: SortOrder
+    challenge_submissions?: challenge_submissionsOrderByRelationAggregateInput
+    challenges?: challengesOrderByRelationAggregateInput
+  }
+
+  export type profileWhereUniqueInput = Prisma.AtLeast<{
+    profile_id?: string
+    email?: string
+    AND?: profileWhereInput | profileWhereInput[]
+    OR?: profileWhereInput[]
+    NOT?: profileWhereInput | profileWhereInput[]
+    first_name?: StringFilter<"profile"> | string
+    last_name?: StringFilter<"profile"> | string
+    coins?: IntFilter<"profile"> | number
+    phone_number?: StringFilter<"profile"> | string
+    date_of_birth?: DateTimeFilter<"profile"> | Date | string
+    gender?: Enumgender_typeFilter<"profile"> | $Enums.gender_type
+    challenge_submissions?: Challenge_submissionsListRelationFilter
+    challenges?: ChallengesListRelationFilter
+  }, "profile_id" | "email">
+
+  export type profileOrderByWithAggregationInput = {
+    profile_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    coins?: SortOrder
+    phone_number?: SortOrder
+    email?: SortOrder
+    date_of_birth?: SortOrder
+    gender?: SortOrder
+    _count?: profileCountOrderByAggregateInput
+    _avg?: profileAvgOrderByAggregateInput
+    _max?: profileMaxOrderByAggregateInput
+    _min?: profileMinOrderByAggregateInput
+    _sum?: profileSumOrderByAggregateInput
+  }
+
+  export type profileScalarWhereWithAggregatesInput = {
+    AND?: profileScalarWhereWithAggregatesInput | profileScalarWhereWithAggregatesInput[]
+    OR?: profileScalarWhereWithAggregatesInput[]
+    NOT?: profileScalarWhereWithAggregatesInput | profileScalarWhereWithAggregatesInput[]
+    profile_id?: StringWithAggregatesFilter<"profile"> | string
+    first_name?: StringWithAggregatesFilter<"profile"> | string
+    last_name?: StringWithAggregatesFilter<"profile"> | string
+    coins?: IntWithAggregatesFilter<"profile"> | number
+    phone_number?: StringWithAggregatesFilter<"profile"> | string
+    email?: StringWithAggregatesFilter<"profile"> | string
+    date_of_birth?: DateTimeWithAggregatesFilter<"profile"> | Date | string
+    gender?: Enumgender_typeWithAggregatesFilter<"profile"> | $Enums.gender_type
+  }
+
   export type challengesCreateInput = {
     c_target: $Enums.c_target_type
     c_description: string
     title: string
-    time_created: Date | string
+    time_created?: Date | string
+    challenge_submissions?: challenge_submissionsCreateNestedManyWithoutChallengesInput
+    profile?: profileCreateNestedOneWithoutChallengesInput
     open_challenges?: open_challengesCreateNestedOneWithoutChallengesInput
     targeted_challenges?: targeted_challengesCreateNestedOneWithoutChallengesInput
   }
@@ -4628,7 +7445,9 @@ export namespace Prisma {
     c_target: $Enums.c_target_type
     c_description: string
     title: string
-    time_created: Date | string
+    time_created?: Date | string
+    creator_id?: string | null
+    challenge_submissions?: challenge_submissionsUncheckedCreateNestedManyWithoutChallengesInput
     open_challenges?: open_challengesUncheckedCreateNestedOneWithoutChallengesInput
     targeted_challenges?: targeted_challengesUncheckedCreateNestedOneWithoutChallengesInput
   }
@@ -4638,6 +7457,8 @@ export namespace Prisma {
     c_description?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     time_created?: DateTimeFieldUpdateOperationsInput | Date | string
+    challenge_submissions?: challenge_submissionsUpdateManyWithoutChallengesNestedInput
+    profile?: profileUpdateOneWithoutChallengesNestedInput
     open_challenges?: open_challengesUpdateOneWithoutChallengesNestedInput
     targeted_challenges?: targeted_challengesUpdateOneWithoutChallengesNestedInput
   }
@@ -4648,6 +7469,8 @@ export namespace Prisma {
     c_description?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     time_created?: DateTimeFieldUpdateOperationsInput | Date | string
+    creator_id?: NullableStringFieldUpdateOperationsInput | string | null
+    challenge_submissions?: challenge_submissionsUncheckedUpdateManyWithoutChallengesNestedInput
     open_challenges?: open_challengesUncheckedUpdateOneWithoutChallengesNestedInput
     targeted_challenges?: targeted_challengesUncheckedUpdateOneWithoutChallengesNestedInput
   }
@@ -4657,7 +7480,8 @@ export namespace Prisma {
     c_target: $Enums.c_target_type
     c_description: string
     title: string
-    time_created: Date | string
+    time_created?: Date | string
+    creator_id?: string | null
   }
 
   export type challengesUpdateManyMutationInput = {
@@ -4673,16 +7497,17 @@ export namespace Prisma {
     c_description?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     time_created?: DateTimeFieldUpdateOperationsInput | Date | string
+    creator_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type open_challengesCreateInput = {
-    submissions: number
+    submissions?: number
     challenges: challengesCreateNestedOneWithoutOpen_challengesInput
   }
 
   export type open_challengesUncheckedCreateInput = {
     challenge_id: number
-    submissions: number
+    submissions?: number
   }
 
   export type open_challengesUpdateInput = {
@@ -4697,7 +7522,7 @@ export namespace Prisma {
 
   export type open_challengesCreateManyInput = {
     challenge_id: number
-    submissions: number
+    submissions?: number
   }
 
   export type open_challengesUpdateManyMutationInput = {
@@ -4757,6 +7582,142 @@ export namespace Prisma {
     specific_target?: StringFieldUpdateOperationsInput | string
   }
 
+  export type challenge_submissionsCreateInput = {
+    submission_data?: string | null
+    time_submitted?: Date | string
+    challenges: challengesCreateNestedOneWithoutChallenge_submissionsInput
+    profile: profileCreateNestedOneWithoutChallenge_submissionsInput
+  }
+
+  export type challenge_submissionsUncheckedCreateInput = {
+    id?: number
+    user_id: string
+    challenge_id: number
+    submission_data?: string | null
+    time_submitted?: Date | string
+  }
+
+  export type challenge_submissionsUpdateInput = {
+    submission_data?: NullableStringFieldUpdateOperationsInput | string | null
+    time_submitted?: DateTimeFieldUpdateOperationsInput | Date | string
+    challenges?: challengesUpdateOneRequiredWithoutChallenge_submissionsNestedInput
+    profile?: profileUpdateOneRequiredWithoutChallenge_submissionsNestedInput
+  }
+
+  export type challenge_submissionsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: StringFieldUpdateOperationsInput | string
+    challenge_id?: IntFieldUpdateOperationsInput | number
+    submission_data?: NullableStringFieldUpdateOperationsInput | string | null
+    time_submitted?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type challenge_submissionsCreateManyInput = {
+    id?: number
+    user_id: string
+    challenge_id: number
+    submission_data?: string | null
+    time_submitted?: Date | string
+  }
+
+  export type challenge_submissionsUpdateManyMutationInput = {
+    submission_data?: NullableStringFieldUpdateOperationsInput | string | null
+    time_submitted?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type challenge_submissionsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: StringFieldUpdateOperationsInput | string
+    challenge_id?: IntFieldUpdateOperationsInput | number
+    submission_data?: NullableStringFieldUpdateOperationsInput | string | null
+    time_submitted?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type profileCreateInput = {
+    profile_id: string
+    first_name: string
+    last_name: string
+    coins?: number
+    phone_number: string
+    email: string
+    date_of_birth: Date | string
+    gender: $Enums.gender_type
+    challenge_submissions?: challenge_submissionsCreateNestedManyWithoutProfileInput
+    challenges?: challengesCreateNestedManyWithoutProfileInput
+  }
+
+  export type profileUncheckedCreateInput = {
+    profile_id: string
+    first_name: string
+    last_name: string
+    coins?: number
+    phone_number: string
+    email: string
+    date_of_birth: Date | string
+    gender: $Enums.gender_type
+    challenge_submissions?: challenge_submissionsUncheckedCreateNestedManyWithoutProfileInput
+    challenges?: challengesUncheckedCreateNestedManyWithoutProfileInput
+  }
+
+  export type profileUpdateInput = {
+    profile_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    coins?: IntFieldUpdateOperationsInput | number
+    phone_number?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    gender?: Enumgender_typeFieldUpdateOperationsInput | $Enums.gender_type
+    challenge_submissions?: challenge_submissionsUpdateManyWithoutProfileNestedInput
+    challenges?: challengesUpdateManyWithoutProfileNestedInput
+  }
+
+  export type profileUncheckedUpdateInput = {
+    profile_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    coins?: IntFieldUpdateOperationsInput | number
+    phone_number?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    gender?: Enumgender_typeFieldUpdateOperationsInput | $Enums.gender_type
+    challenge_submissions?: challenge_submissionsUncheckedUpdateManyWithoutProfileNestedInput
+    challenges?: challengesUncheckedUpdateManyWithoutProfileNestedInput
+  }
+
+  export type profileCreateManyInput = {
+    profile_id: string
+    first_name: string
+    last_name: string
+    coins?: number
+    phone_number: string
+    email: string
+    date_of_birth: Date | string
+    gender: $Enums.gender_type
+  }
+
+  export type profileUpdateManyMutationInput = {
+    profile_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    coins?: IntFieldUpdateOperationsInput | number
+    phone_number?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    gender?: Enumgender_typeFieldUpdateOperationsInput | $Enums.gender_type
+  }
+
+  export type profileUncheckedUpdateManyInput = {
+    profile_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    coins?: IntFieldUpdateOperationsInput | number
+    phone_number?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    gender?: Enumgender_typeFieldUpdateOperationsInput | $Enums.gender_type
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -4801,6 +7762,32 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type Challenge_submissionsListRelationFilter = {
+    every?: challenge_submissionsWhereInput
+    some?: challenge_submissionsWhereInput
+    none?: challenge_submissionsWhereInput
+  }
+
+  export type ProfileNullableScalarRelationFilter = {
+    is?: profileWhereInput | null
+    isNot?: profileWhereInput | null
+  }
+
   export type Open_challengesNullableScalarRelationFilter = {
     is?: open_challengesWhereInput | null
     isNot?: open_challengesWhereInput | null
@@ -4811,12 +7798,22 @@ export namespace Prisma {
     isNot?: targeted_challengesWhereInput | null
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type challenge_submissionsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type challengesCountOrderByAggregateInput = {
     id?: SortOrder
     c_target?: SortOrder
     c_description?: SortOrder
     title?: SortOrder
     time_created?: SortOrder
+    creator_id?: SortOrder
   }
 
   export type challengesAvgOrderByAggregateInput = {
@@ -4829,6 +7826,7 @@ export namespace Prisma {
     c_description?: SortOrder
     title?: SortOrder
     time_created?: SortOrder
+    creator_id?: SortOrder
   }
 
   export type challengesMinOrderByAggregateInput = {
@@ -4837,6 +7835,7 @@ export namespace Prisma {
     c_description?: SortOrder
     title?: SortOrder
     time_created?: SortOrder
+    creator_id?: SortOrder
   }
 
   export type challengesSumOrderByAggregateInput = {
@@ -4899,6 +7898,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type ChallengesScalarRelationFilter = {
@@ -4964,6 +7981,131 @@ export namespace Prisma {
     value_bet_against?: SortOrder
   }
 
+  export type ProfileScalarRelationFilter = {
+    is?: profileWhereInput
+    isNot?: profileWhereInput
+  }
+
+  export type challenge_submissionsUser_idChallenge_idCompoundUniqueInput = {
+    user_id: string
+    challenge_id: number
+  }
+
+  export type challenge_submissionsCountOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    challenge_id?: SortOrder
+    submission_data?: SortOrder
+    time_submitted?: SortOrder
+  }
+
+  export type challenge_submissionsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    challenge_id?: SortOrder
+  }
+
+  export type challenge_submissionsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    challenge_id?: SortOrder
+    submission_data?: SortOrder
+    time_submitted?: SortOrder
+  }
+
+  export type challenge_submissionsMinOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    challenge_id?: SortOrder
+    submission_data?: SortOrder
+    time_submitted?: SortOrder
+  }
+
+  export type challenge_submissionsSumOrderByAggregateInput = {
+    id?: SortOrder
+    challenge_id?: SortOrder
+  }
+
+  export type Enumgender_typeFilter<$PrismaModel = never> = {
+    equals?: $Enums.gender_type | Enumgender_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.gender_type[] | ListEnumgender_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.gender_type[] | ListEnumgender_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumgender_typeFilter<$PrismaModel> | $Enums.gender_type
+  }
+
+  export type ChallengesListRelationFilter = {
+    every?: challengesWhereInput
+    some?: challengesWhereInput
+    none?: challengesWhereInput
+  }
+
+  export type challengesOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type profileCountOrderByAggregateInput = {
+    profile_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    coins?: SortOrder
+    phone_number?: SortOrder
+    email?: SortOrder
+    date_of_birth?: SortOrder
+    gender?: SortOrder
+  }
+
+  export type profileAvgOrderByAggregateInput = {
+    coins?: SortOrder
+  }
+
+  export type profileMaxOrderByAggregateInput = {
+    profile_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    coins?: SortOrder
+    phone_number?: SortOrder
+    email?: SortOrder
+    date_of_birth?: SortOrder
+    gender?: SortOrder
+  }
+
+  export type profileMinOrderByAggregateInput = {
+    profile_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    coins?: SortOrder
+    phone_number?: SortOrder
+    email?: SortOrder
+    date_of_birth?: SortOrder
+    gender?: SortOrder
+  }
+
+  export type profileSumOrderByAggregateInput = {
+    coins?: SortOrder
+  }
+
+  export type Enumgender_typeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.gender_type | Enumgender_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.gender_type[] | ListEnumgender_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.gender_type[] | ListEnumgender_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumgender_typeWithAggregatesFilter<$PrismaModel> | $Enums.gender_type
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumgender_typeFilter<$PrismaModel>
+    _max?: NestedEnumgender_typeFilter<$PrismaModel>
+  }
+
+  export type challenge_submissionsCreateNestedManyWithoutChallengesInput = {
+    create?: XOR<challenge_submissionsCreateWithoutChallengesInput, challenge_submissionsUncheckedCreateWithoutChallengesInput> | challenge_submissionsCreateWithoutChallengesInput[] | challenge_submissionsUncheckedCreateWithoutChallengesInput[]
+    connectOrCreate?: challenge_submissionsCreateOrConnectWithoutChallengesInput | challenge_submissionsCreateOrConnectWithoutChallengesInput[]
+    createMany?: challenge_submissionsCreateManyChallengesInputEnvelope
+    connect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+  }
+
+  export type profileCreateNestedOneWithoutChallengesInput = {
+    create?: XOR<profileCreateWithoutChallengesInput, profileUncheckedCreateWithoutChallengesInput>
+    connectOrCreate?: profileCreateOrConnectWithoutChallengesInput
+    connect?: profileWhereUniqueInput
+  }
+
   export type open_challengesCreateNestedOneWithoutChallengesInput = {
     create?: XOR<open_challengesCreateWithoutChallengesInput, open_challengesUncheckedCreateWithoutChallengesInput>
     connectOrCreate?: open_challengesCreateOrConnectWithoutChallengesInput
@@ -4974,6 +8116,13 @@ export namespace Prisma {
     create?: XOR<targeted_challengesCreateWithoutChallengesInput, targeted_challengesUncheckedCreateWithoutChallengesInput>
     connectOrCreate?: targeted_challengesCreateOrConnectWithoutChallengesInput
     connect?: targeted_challengesWhereUniqueInput
+  }
+
+  export type challenge_submissionsUncheckedCreateNestedManyWithoutChallengesInput = {
+    create?: XOR<challenge_submissionsCreateWithoutChallengesInput, challenge_submissionsUncheckedCreateWithoutChallengesInput> | challenge_submissionsCreateWithoutChallengesInput[] | challenge_submissionsUncheckedCreateWithoutChallengesInput[]
+    connectOrCreate?: challenge_submissionsCreateOrConnectWithoutChallengesInput | challenge_submissionsCreateOrConnectWithoutChallengesInput[]
+    createMany?: challenge_submissionsCreateManyChallengesInputEnvelope
+    connect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
   }
 
   export type open_challengesUncheckedCreateNestedOneWithoutChallengesInput = {
@@ -4998,6 +8147,30 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type challenge_submissionsUpdateManyWithoutChallengesNestedInput = {
+    create?: XOR<challenge_submissionsCreateWithoutChallengesInput, challenge_submissionsUncheckedCreateWithoutChallengesInput> | challenge_submissionsCreateWithoutChallengesInput[] | challenge_submissionsUncheckedCreateWithoutChallengesInput[]
+    connectOrCreate?: challenge_submissionsCreateOrConnectWithoutChallengesInput | challenge_submissionsCreateOrConnectWithoutChallengesInput[]
+    upsert?: challenge_submissionsUpsertWithWhereUniqueWithoutChallengesInput | challenge_submissionsUpsertWithWhereUniqueWithoutChallengesInput[]
+    createMany?: challenge_submissionsCreateManyChallengesInputEnvelope
+    set?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    disconnect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    delete?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    connect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    update?: challenge_submissionsUpdateWithWhereUniqueWithoutChallengesInput | challenge_submissionsUpdateWithWhereUniqueWithoutChallengesInput[]
+    updateMany?: challenge_submissionsUpdateManyWithWhereWithoutChallengesInput | challenge_submissionsUpdateManyWithWhereWithoutChallengesInput[]
+    deleteMany?: challenge_submissionsScalarWhereInput | challenge_submissionsScalarWhereInput[]
+  }
+
+  export type profileUpdateOneWithoutChallengesNestedInput = {
+    create?: XOR<profileCreateWithoutChallengesInput, profileUncheckedCreateWithoutChallengesInput>
+    connectOrCreate?: profileCreateOrConnectWithoutChallengesInput
+    upsert?: profileUpsertWithoutChallengesInput
+    disconnect?: profileWhereInput | boolean
+    delete?: profileWhereInput | boolean
+    connect?: profileWhereUniqueInput
+    update?: XOR<XOR<profileUpdateToOneWithWhereWithoutChallengesInput, profileUpdateWithoutChallengesInput>, profileUncheckedUpdateWithoutChallengesInput>
   }
 
   export type open_challengesUpdateOneWithoutChallengesNestedInput = {
@@ -5026,6 +8199,24 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type challenge_submissionsUncheckedUpdateManyWithoutChallengesNestedInput = {
+    create?: XOR<challenge_submissionsCreateWithoutChallengesInput, challenge_submissionsUncheckedCreateWithoutChallengesInput> | challenge_submissionsCreateWithoutChallengesInput[] | challenge_submissionsUncheckedCreateWithoutChallengesInput[]
+    connectOrCreate?: challenge_submissionsCreateOrConnectWithoutChallengesInput | challenge_submissionsCreateOrConnectWithoutChallengesInput[]
+    upsert?: challenge_submissionsUpsertWithWhereUniqueWithoutChallengesInput | challenge_submissionsUpsertWithWhereUniqueWithoutChallengesInput[]
+    createMany?: challenge_submissionsCreateManyChallengesInputEnvelope
+    set?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    disconnect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    delete?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    connect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    update?: challenge_submissionsUpdateWithWhereUniqueWithoutChallengesInput | challenge_submissionsUpdateWithWhereUniqueWithoutChallengesInput[]
+    updateMany?: challenge_submissionsUpdateManyWithWhereWithoutChallengesInput | challenge_submissionsUpdateManyWithWhereWithoutChallengesInput[]
+    deleteMany?: challenge_submissionsScalarWhereInput | challenge_submissionsScalarWhereInput[]
   }
 
   export type open_challengesUncheckedUpdateOneWithoutChallengesNestedInput = {
@@ -5076,6 +8267,122 @@ export namespace Prisma {
     update?: XOR<XOR<challengesUpdateToOneWithWhereWithoutTargeted_challengesInput, challengesUpdateWithoutTargeted_challengesInput>, challengesUncheckedUpdateWithoutTargeted_challengesInput>
   }
 
+  export type challengesCreateNestedOneWithoutChallenge_submissionsInput = {
+    create?: XOR<challengesCreateWithoutChallenge_submissionsInput, challengesUncheckedCreateWithoutChallenge_submissionsInput>
+    connectOrCreate?: challengesCreateOrConnectWithoutChallenge_submissionsInput
+    connect?: challengesWhereUniqueInput
+  }
+
+  export type profileCreateNestedOneWithoutChallenge_submissionsInput = {
+    create?: XOR<profileCreateWithoutChallenge_submissionsInput, profileUncheckedCreateWithoutChallenge_submissionsInput>
+    connectOrCreate?: profileCreateOrConnectWithoutChallenge_submissionsInput
+    connect?: profileWhereUniqueInput
+  }
+
+  export type challengesUpdateOneRequiredWithoutChallenge_submissionsNestedInput = {
+    create?: XOR<challengesCreateWithoutChallenge_submissionsInput, challengesUncheckedCreateWithoutChallenge_submissionsInput>
+    connectOrCreate?: challengesCreateOrConnectWithoutChallenge_submissionsInput
+    upsert?: challengesUpsertWithoutChallenge_submissionsInput
+    connect?: challengesWhereUniqueInput
+    update?: XOR<XOR<challengesUpdateToOneWithWhereWithoutChallenge_submissionsInput, challengesUpdateWithoutChallenge_submissionsInput>, challengesUncheckedUpdateWithoutChallenge_submissionsInput>
+  }
+
+  export type profileUpdateOneRequiredWithoutChallenge_submissionsNestedInput = {
+    create?: XOR<profileCreateWithoutChallenge_submissionsInput, profileUncheckedCreateWithoutChallenge_submissionsInput>
+    connectOrCreate?: profileCreateOrConnectWithoutChallenge_submissionsInput
+    upsert?: profileUpsertWithoutChallenge_submissionsInput
+    connect?: profileWhereUniqueInput
+    update?: XOR<XOR<profileUpdateToOneWithWhereWithoutChallenge_submissionsInput, profileUpdateWithoutChallenge_submissionsInput>, profileUncheckedUpdateWithoutChallenge_submissionsInput>
+  }
+
+  export type challenge_submissionsCreateNestedManyWithoutProfileInput = {
+    create?: XOR<challenge_submissionsCreateWithoutProfileInput, challenge_submissionsUncheckedCreateWithoutProfileInput> | challenge_submissionsCreateWithoutProfileInput[] | challenge_submissionsUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: challenge_submissionsCreateOrConnectWithoutProfileInput | challenge_submissionsCreateOrConnectWithoutProfileInput[]
+    createMany?: challenge_submissionsCreateManyProfileInputEnvelope
+    connect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+  }
+
+  export type challengesCreateNestedManyWithoutProfileInput = {
+    create?: XOR<challengesCreateWithoutProfileInput, challengesUncheckedCreateWithoutProfileInput> | challengesCreateWithoutProfileInput[] | challengesUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: challengesCreateOrConnectWithoutProfileInput | challengesCreateOrConnectWithoutProfileInput[]
+    createMany?: challengesCreateManyProfileInputEnvelope
+    connect?: challengesWhereUniqueInput | challengesWhereUniqueInput[]
+  }
+
+  export type challenge_submissionsUncheckedCreateNestedManyWithoutProfileInput = {
+    create?: XOR<challenge_submissionsCreateWithoutProfileInput, challenge_submissionsUncheckedCreateWithoutProfileInput> | challenge_submissionsCreateWithoutProfileInput[] | challenge_submissionsUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: challenge_submissionsCreateOrConnectWithoutProfileInput | challenge_submissionsCreateOrConnectWithoutProfileInput[]
+    createMany?: challenge_submissionsCreateManyProfileInputEnvelope
+    connect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+  }
+
+  export type challengesUncheckedCreateNestedManyWithoutProfileInput = {
+    create?: XOR<challengesCreateWithoutProfileInput, challengesUncheckedCreateWithoutProfileInput> | challengesCreateWithoutProfileInput[] | challengesUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: challengesCreateOrConnectWithoutProfileInput | challengesCreateOrConnectWithoutProfileInput[]
+    createMany?: challengesCreateManyProfileInputEnvelope
+    connect?: challengesWhereUniqueInput | challengesWhereUniqueInput[]
+  }
+
+  export type Enumgender_typeFieldUpdateOperationsInput = {
+    set?: $Enums.gender_type
+  }
+
+  export type challenge_submissionsUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<challenge_submissionsCreateWithoutProfileInput, challenge_submissionsUncheckedCreateWithoutProfileInput> | challenge_submissionsCreateWithoutProfileInput[] | challenge_submissionsUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: challenge_submissionsCreateOrConnectWithoutProfileInput | challenge_submissionsCreateOrConnectWithoutProfileInput[]
+    upsert?: challenge_submissionsUpsertWithWhereUniqueWithoutProfileInput | challenge_submissionsUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: challenge_submissionsCreateManyProfileInputEnvelope
+    set?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    disconnect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    delete?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    connect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    update?: challenge_submissionsUpdateWithWhereUniqueWithoutProfileInput | challenge_submissionsUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: challenge_submissionsUpdateManyWithWhereWithoutProfileInput | challenge_submissionsUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: challenge_submissionsScalarWhereInput | challenge_submissionsScalarWhereInput[]
+  }
+
+  export type challengesUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<challengesCreateWithoutProfileInput, challengesUncheckedCreateWithoutProfileInput> | challengesCreateWithoutProfileInput[] | challengesUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: challengesCreateOrConnectWithoutProfileInput | challengesCreateOrConnectWithoutProfileInput[]
+    upsert?: challengesUpsertWithWhereUniqueWithoutProfileInput | challengesUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: challengesCreateManyProfileInputEnvelope
+    set?: challengesWhereUniqueInput | challengesWhereUniqueInput[]
+    disconnect?: challengesWhereUniqueInput | challengesWhereUniqueInput[]
+    delete?: challengesWhereUniqueInput | challengesWhereUniqueInput[]
+    connect?: challengesWhereUniqueInput | challengesWhereUniqueInput[]
+    update?: challengesUpdateWithWhereUniqueWithoutProfileInput | challengesUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: challengesUpdateManyWithWhereWithoutProfileInput | challengesUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: challengesScalarWhereInput | challengesScalarWhereInput[]
+  }
+
+  export type challenge_submissionsUncheckedUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<challenge_submissionsCreateWithoutProfileInput, challenge_submissionsUncheckedCreateWithoutProfileInput> | challenge_submissionsCreateWithoutProfileInput[] | challenge_submissionsUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: challenge_submissionsCreateOrConnectWithoutProfileInput | challenge_submissionsCreateOrConnectWithoutProfileInput[]
+    upsert?: challenge_submissionsUpsertWithWhereUniqueWithoutProfileInput | challenge_submissionsUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: challenge_submissionsCreateManyProfileInputEnvelope
+    set?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    disconnect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    delete?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    connect?: challenge_submissionsWhereUniqueInput | challenge_submissionsWhereUniqueInput[]
+    update?: challenge_submissionsUpdateWithWhereUniqueWithoutProfileInput | challenge_submissionsUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: challenge_submissionsUpdateManyWithWhereWithoutProfileInput | challenge_submissionsUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: challenge_submissionsScalarWhereInput | challenge_submissionsScalarWhereInput[]
+  }
+
+  export type challengesUncheckedUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<challengesCreateWithoutProfileInput, challengesUncheckedCreateWithoutProfileInput> | challengesCreateWithoutProfileInput[] | challengesUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: challengesCreateOrConnectWithoutProfileInput | challengesCreateOrConnectWithoutProfileInput[]
+    upsert?: challengesUpsertWithWhereUniqueWithoutProfileInput | challengesUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: challengesCreateManyProfileInputEnvelope
+    set?: challengesWhereUniqueInput | challengesWhereUniqueInput[]
+    disconnect?: challengesWhereUniqueInput | challengesWhereUniqueInput[]
+    delete?: challengesWhereUniqueInput | challengesWhereUniqueInput[]
+    connect?: challengesWhereUniqueInput | challengesWhereUniqueInput[]
+    update?: challengesUpdateWithWhereUniqueWithoutProfileInput | challengesUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: challengesUpdateManyWithWhereWithoutProfileInput | challengesUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: challengesScalarWhereInput | challengesScalarWhereInput[]
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -5117,6 +8424,20 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -5187,12 +8508,109 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumgender_typeFilter<$PrismaModel = never> = {
+    equals?: $Enums.gender_type | Enumgender_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.gender_type[] | ListEnumgender_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.gender_type[] | ListEnumgender_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumgender_typeFilter<$PrismaModel> | $Enums.gender_type
+  }
+
+  export type NestedEnumgender_typeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.gender_type | Enumgender_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.gender_type[] | ListEnumgender_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.gender_type[] | ListEnumgender_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumgender_typeWithAggregatesFilter<$PrismaModel> | $Enums.gender_type
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumgender_typeFilter<$PrismaModel>
+    _max?: NestedEnumgender_typeFilter<$PrismaModel>
+  }
+
+  export type challenge_submissionsCreateWithoutChallengesInput = {
+    submission_data?: string | null
+    time_submitted?: Date | string
+    profile: profileCreateNestedOneWithoutChallenge_submissionsInput
+  }
+
+  export type challenge_submissionsUncheckedCreateWithoutChallengesInput = {
+    id?: number
+    user_id: string
+    submission_data?: string | null
+    time_submitted?: Date | string
+  }
+
+  export type challenge_submissionsCreateOrConnectWithoutChallengesInput = {
+    where: challenge_submissionsWhereUniqueInput
+    create: XOR<challenge_submissionsCreateWithoutChallengesInput, challenge_submissionsUncheckedCreateWithoutChallengesInput>
+  }
+
+  export type challenge_submissionsCreateManyChallengesInputEnvelope = {
+    data: challenge_submissionsCreateManyChallengesInput | challenge_submissionsCreateManyChallengesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type profileCreateWithoutChallengesInput = {
+    profile_id: string
+    first_name: string
+    last_name: string
+    coins?: number
+    phone_number: string
+    email: string
+    date_of_birth: Date | string
+    gender: $Enums.gender_type
+    challenge_submissions?: challenge_submissionsCreateNestedManyWithoutProfileInput
+  }
+
+  export type profileUncheckedCreateWithoutChallengesInput = {
+    profile_id: string
+    first_name: string
+    last_name: string
+    coins?: number
+    phone_number: string
+    email: string
+    date_of_birth: Date | string
+    gender: $Enums.gender_type
+    challenge_submissions?: challenge_submissionsUncheckedCreateNestedManyWithoutProfileInput
+  }
+
+  export type profileCreateOrConnectWithoutChallengesInput = {
+    where: profileWhereUniqueInput
+    create: XOR<profileCreateWithoutChallengesInput, profileUncheckedCreateWithoutChallengesInput>
+  }
+
   export type open_challengesCreateWithoutChallengesInput = {
-    submissions: number
+    submissions?: number
   }
 
   export type open_challengesUncheckedCreateWithoutChallengesInput = {
-    submissions: number
+    submissions?: number
   }
 
   export type open_challengesCreateOrConnectWithoutChallengesInput = {
@@ -5215,6 +8633,68 @@ export namespace Prisma {
   export type targeted_challengesCreateOrConnectWithoutChallengesInput = {
     where: targeted_challengesWhereUniqueInput
     create: XOR<targeted_challengesCreateWithoutChallengesInput, targeted_challengesUncheckedCreateWithoutChallengesInput>
+  }
+
+  export type challenge_submissionsUpsertWithWhereUniqueWithoutChallengesInput = {
+    where: challenge_submissionsWhereUniqueInput
+    update: XOR<challenge_submissionsUpdateWithoutChallengesInput, challenge_submissionsUncheckedUpdateWithoutChallengesInput>
+    create: XOR<challenge_submissionsCreateWithoutChallengesInput, challenge_submissionsUncheckedCreateWithoutChallengesInput>
+  }
+
+  export type challenge_submissionsUpdateWithWhereUniqueWithoutChallengesInput = {
+    where: challenge_submissionsWhereUniqueInput
+    data: XOR<challenge_submissionsUpdateWithoutChallengesInput, challenge_submissionsUncheckedUpdateWithoutChallengesInput>
+  }
+
+  export type challenge_submissionsUpdateManyWithWhereWithoutChallengesInput = {
+    where: challenge_submissionsScalarWhereInput
+    data: XOR<challenge_submissionsUpdateManyMutationInput, challenge_submissionsUncheckedUpdateManyWithoutChallengesInput>
+  }
+
+  export type challenge_submissionsScalarWhereInput = {
+    AND?: challenge_submissionsScalarWhereInput | challenge_submissionsScalarWhereInput[]
+    OR?: challenge_submissionsScalarWhereInput[]
+    NOT?: challenge_submissionsScalarWhereInput | challenge_submissionsScalarWhereInput[]
+    id?: IntFilter<"challenge_submissions"> | number
+    user_id?: StringFilter<"challenge_submissions"> | string
+    challenge_id?: IntFilter<"challenge_submissions"> | number
+    submission_data?: StringNullableFilter<"challenge_submissions"> | string | null
+    time_submitted?: DateTimeFilter<"challenge_submissions"> | Date | string
+  }
+
+  export type profileUpsertWithoutChallengesInput = {
+    update: XOR<profileUpdateWithoutChallengesInput, profileUncheckedUpdateWithoutChallengesInput>
+    create: XOR<profileCreateWithoutChallengesInput, profileUncheckedCreateWithoutChallengesInput>
+    where?: profileWhereInput
+  }
+
+  export type profileUpdateToOneWithWhereWithoutChallengesInput = {
+    where?: profileWhereInput
+    data: XOR<profileUpdateWithoutChallengesInput, profileUncheckedUpdateWithoutChallengesInput>
+  }
+
+  export type profileUpdateWithoutChallengesInput = {
+    profile_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    coins?: IntFieldUpdateOperationsInput | number
+    phone_number?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    gender?: Enumgender_typeFieldUpdateOperationsInput | $Enums.gender_type
+    challenge_submissions?: challenge_submissionsUpdateManyWithoutProfileNestedInput
+  }
+
+  export type profileUncheckedUpdateWithoutChallengesInput = {
+    profile_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    coins?: IntFieldUpdateOperationsInput | number
+    phone_number?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    gender?: Enumgender_typeFieldUpdateOperationsInput | $Enums.gender_type
+    challenge_submissions?: challenge_submissionsUncheckedUpdateManyWithoutProfileNestedInput
   }
 
   export type open_challengesUpsertWithoutChallengesInput = {
@@ -5263,7 +8743,9 @@ export namespace Prisma {
     c_target: $Enums.c_target_type
     c_description: string
     title: string
-    time_created: Date | string
+    time_created?: Date | string
+    challenge_submissions?: challenge_submissionsCreateNestedManyWithoutChallengesInput
+    profile?: profileCreateNestedOneWithoutChallengesInput
     targeted_challenges?: targeted_challengesCreateNestedOneWithoutChallengesInput
   }
 
@@ -5272,7 +8754,9 @@ export namespace Prisma {
     c_target: $Enums.c_target_type
     c_description: string
     title: string
-    time_created: Date | string
+    time_created?: Date | string
+    creator_id?: string | null
+    challenge_submissions?: challenge_submissionsUncheckedCreateNestedManyWithoutChallengesInput
     targeted_challenges?: targeted_challengesUncheckedCreateNestedOneWithoutChallengesInput
   }
 
@@ -5297,6 +8781,8 @@ export namespace Prisma {
     c_description?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     time_created?: DateTimeFieldUpdateOperationsInput | Date | string
+    challenge_submissions?: challenge_submissionsUpdateManyWithoutChallengesNestedInput
+    profile?: profileUpdateOneWithoutChallengesNestedInput
     targeted_challenges?: targeted_challengesUpdateOneWithoutChallengesNestedInput
   }
 
@@ -5306,6 +8792,8 @@ export namespace Prisma {
     c_description?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     time_created?: DateTimeFieldUpdateOperationsInput | Date | string
+    creator_id?: NullableStringFieldUpdateOperationsInput | string | null
+    challenge_submissions?: challenge_submissionsUncheckedUpdateManyWithoutChallengesNestedInput
     targeted_challenges?: targeted_challengesUncheckedUpdateOneWithoutChallengesNestedInput
   }
 
@@ -5313,7 +8801,9 @@ export namespace Prisma {
     c_target: $Enums.c_target_type
     c_description: string
     title: string
-    time_created: Date | string
+    time_created?: Date | string
+    challenge_submissions?: challenge_submissionsCreateNestedManyWithoutChallengesInput
+    profile?: profileCreateNestedOneWithoutChallengesInput
     open_challenges?: open_challengesCreateNestedOneWithoutChallengesInput
   }
 
@@ -5322,7 +8812,9 @@ export namespace Prisma {
     c_target: $Enums.c_target_type
     c_description: string
     title: string
-    time_created: Date | string
+    time_created?: Date | string
+    creator_id?: string | null
+    challenge_submissions?: challenge_submissionsUncheckedCreateNestedManyWithoutChallengesInput
     open_challenges?: open_challengesUncheckedCreateNestedOneWithoutChallengesInput
   }
 
@@ -5347,6 +8839,8 @@ export namespace Prisma {
     c_description?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     time_created?: DateTimeFieldUpdateOperationsInput | Date | string
+    challenge_submissions?: challenge_submissionsUpdateManyWithoutChallengesNestedInput
+    profile?: profileUpdateOneWithoutChallengesNestedInput
     open_challenges?: open_challengesUpdateOneWithoutChallengesNestedInput
   }
 
@@ -5356,7 +8850,320 @@ export namespace Prisma {
     c_description?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     time_created?: DateTimeFieldUpdateOperationsInput | Date | string
+    creator_id?: NullableStringFieldUpdateOperationsInput | string | null
+    challenge_submissions?: challenge_submissionsUncheckedUpdateManyWithoutChallengesNestedInput
     open_challenges?: open_challengesUncheckedUpdateOneWithoutChallengesNestedInput
+  }
+
+  export type challengesCreateWithoutChallenge_submissionsInput = {
+    c_target: $Enums.c_target_type
+    c_description: string
+    title: string
+    time_created?: Date | string
+    profile?: profileCreateNestedOneWithoutChallengesInput
+    open_challenges?: open_challengesCreateNestedOneWithoutChallengesInput
+    targeted_challenges?: targeted_challengesCreateNestedOneWithoutChallengesInput
+  }
+
+  export type challengesUncheckedCreateWithoutChallenge_submissionsInput = {
+    id?: number
+    c_target: $Enums.c_target_type
+    c_description: string
+    title: string
+    time_created?: Date | string
+    creator_id?: string | null
+    open_challenges?: open_challengesUncheckedCreateNestedOneWithoutChallengesInput
+    targeted_challenges?: targeted_challengesUncheckedCreateNestedOneWithoutChallengesInput
+  }
+
+  export type challengesCreateOrConnectWithoutChallenge_submissionsInput = {
+    where: challengesWhereUniqueInput
+    create: XOR<challengesCreateWithoutChallenge_submissionsInput, challengesUncheckedCreateWithoutChallenge_submissionsInput>
+  }
+
+  export type profileCreateWithoutChallenge_submissionsInput = {
+    profile_id: string
+    first_name: string
+    last_name: string
+    coins?: number
+    phone_number: string
+    email: string
+    date_of_birth: Date | string
+    gender: $Enums.gender_type
+    challenges?: challengesCreateNestedManyWithoutProfileInput
+  }
+
+  export type profileUncheckedCreateWithoutChallenge_submissionsInput = {
+    profile_id: string
+    first_name: string
+    last_name: string
+    coins?: number
+    phone_number: string
+    email: string
+    date_of_birth: Date | string
+    gender: $Enums.gender_type
+    challenges?: challengesUncheckedCreateNestedManyWithoutProfileInput
+  }
+
+  export type profileCreateOrConnectWithoutChallenge_submissionsInput = {
+    where: profileWhereUniqueInput
+    create: XOR<profileCreateWithoutChallenge_submissionsInput, profileUncheckedCreateWithoutChallenge_submissionsInput>
+  }
+
+  export type challengesUpsertWithoutChallenge_submissionsInput = {
+    update: XOR<challengesUpdateWithoutChallenge_submissionsInput, challengesUncheckedUpdateWithoutChallenge_submissionsInput>
+    create: XOR<challengesCreateWithoutChallenge_submissionsInput, challengesUncheckedCreateWithoutChallenge_submissionsInput>
+    where?: challengesWhereInput
+  }
+
+  export type challengesUpdateToOneWithWhereWithoutChallenge_submissionsInput = {
+    where?: challengesWhereInput
+    data: XOR<challengesUpdateWithoutChallenge_submissionsInput, challengesUncheckedUpdateWithoutChallenge_submissionsInput>
+  }
+
+  export type challengesUpdateWithoutChallenge_submissionsInput = {
+    c_target?: Enumc_target_typeFieldUpdateOperationsInput | $Enums.c_target_type
+    c_description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time_created?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: profileUpdateOneWithoutChallengesNestedInput
+    open_challenges?: open_challengesUpdateOneWithoutChallengesNestedInput
+    targeted_challenges?: targeted_challengesUpdateOneWithoutChallengesNestedInput
+  }
+
+  export type challengesUncheckedUpdateWithoutChallenge_submissionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    c_target?: Enumc_target_typeFieldUpdateOperationsInput | $Enums.c_target_type
+    c_description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time_created?: DateTimeFieldUpdateOperationsInput | Date | string
+    creator_id?: NullableStringFieldUpdateOperationsInput | string | null
+    open_challenges?: open_challengesUncheckedUpdateOneWithoutChallengesNestedInput
+    targeted_challenges?: targeted_challengesUncheckedUpdateOneWithoutChallengesNestedInput
+  }
+
+  export type profileUpsertWithoutChallenge_submissionsInput = {
+    update: XOR<profileUpdateWithoutChallenge_submissionsInput, profileUncheckedUpdateWithoutChallenge_submissionsInput>
+    create: XOR<profileCreateWithoutChallenge_submissionsInput, profileUncheckedCreateWithoutChallenge_submissionsInput>
+    where?: profileWhereInput
+  }
+
+  export type profileUpdateToOneWithWhereWithoutChallenge_submissionsInput = {
+    where?: profileWhereInput
+    data: XOR<profileUpdateWithoutChallenge_submissionsInput, profileUncheckedUpdateWithoutChallenge_submissionsInput>
+  }
+
+  export type profileUpdateWithoutChallenge_submissionsInput = {
+    profile_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    coins?: IntFieldUpdateOperationsInput | number
+    phone_number?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    gender?: Enumgender_typeFieldUpdateOperationsInput | $Enums.gender_type
+    challenges?: challengesUpdateManyWithoutProfileNestedInput
+  }
+
+  export type profileUncheckedUpdateWithoutChallenge_submissionsInput = {
+    profile_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    coins?: IntFieldUpdateOperationsInput | number
+    phone_number?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    gender?: Enumgender_typeFieldUpdateOperationsInput | $Enums.gender_type
+    challenges?: challengesUncheckedUpdateManyWithoutProfileNestedInput
+  }
+
+  export type challenge_submissionsCreateWithoutProfileInput = {
+    submission_data?: string | null
+    time_submitted?: Date | string
+    challenges: challengesCreateNestedOneWithoutChallenge_submissionsInput
+  }
+
+  export type challenge_submissionsUncheckedCreateWithoutProfileInput = {
+    id?: number
+    challenge_id: number
+    submission_data?: string | null
+    time_submitted?: Date | string
+  }
+
+  export type challenge_submissionsCreateOrConnectWithoutProfileInput = {
+    where: challenge_submissionsWhereUniqueInput
+    create: XOR<challenge_submissionsCreateWithoutProfileInput, challenge_submissionsUncheckedCreateWithoutProfileInput>
+  }
+
+  export type challenge_submissionsCreateManyProfileInputEnvelope = {
+    data: challenge_submissionsCreateManyProfileInput | challenge_submissionsCreateManyProfileInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type challengesCreateWithoutProfileInput = {
+    c_target: $Enums.c_target_type
+    c_description: string
+    title: string
+    time_created?: Date | string
+    challenge_submissions?: challenge_submissionsCreateNestedManyWithoutChallengesInput
+    open_challenges?: open_challengesCreateNestedOneWithoutChallengesInput
+    targeted_challenges?: targeted_challengesCreateNestedOneWithoutChallengesInput
+  }
+
+  export type challengesUncheckedCreateWithoutProfileInput = {
+    id?: number
+    c_target: $Enums.c_target_type
+    c_description: string
+    title: string
+    time_created?: Date | string
+    challenge_submissions?: challenge_submissionsUncheckedCreateNestedManyWithoutChallengesInput
+    open_challenges?: open_challengesUncheckedCreateNestedOneWithoutChallengesInput
+    targeted_challenges?: targeted_challengesUncheckedCreateNestedOneWithoutChallengesInput
+  }
+
+  export type challengesCreateOrConnectWithoutProfileInput = {
+    where: challengesWhereUniqueInput
+    create: XOR<challengesCreateWithoutProfileInput, challengesUncheckedCreateWithoutProfileInput>
+  }
+
+  export type challengesCreateManyProfileInputEnvelope = {
+    data: challengesCreateManyProfileInput | challengesCreateManyProfileInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type challenge_submissionsUpsertWithWhereUniqueWithoutProfileInput = {
+    where: challenge_submissionsWhereUniqueInput
+    update: XOR<challenge_submissionsUpdateWithoutProfileInput, challenge_submissionsUncheckedUpdateWithoutProfileInput>
+    create: XOR<challenge_submissionsCreateWithoutProfileInput, challenge_submissionsUncheckedCreateWithoutProfileInput>
+  }
+
+  export type challenge_submissionsUpdateWithWhereUniqueWithoutProfileInput = {
+    where: challenge_submissionsWhereUniqueInput
+    data: XOR<challenge_submissionsUpdateWithoutProfileInput, challenge_submissionsUncheckedUpdateWithoutProfileInput>
+  }
+
+  export type challenge_submissionsUpdateManyWithWhereWithoutProfileInput = {
+    where: challenge_submissionsScalarWhereInput
+    data: XOR<challenge_submissionsUpdateManyMutationInput, challenge_submissionsUncheckedUpdateManyWithoutProfileInput>
+  }
+
+  export type challengesUpsertWithWhereUniqueWithoutProfileInput = {
+    where: challengesWhereUniqueInput
+    update: XOR<challengesUpdateWithoutProfileInput, challengesUncheckedUpdateWithoutProfileInput>
+    create: XOR<challengesCreateWithoutProfileInput, challengesUncheckedCreateWithoutProfileInput>
+  }
+
+  export type challengesUpdateWithWhereUniqueWithoutProfileInput = {
+    where: challengesWhereUniqueInput
+    data: XOR<challengesUpdateWithoutProfileInput, challengesUncheckedUpdateWithoutProfileInput>
+  }
+
+  export type challengesUpdateManyWithWhereWithoutProfileInput = {
+    where: challengesScalarWhereInput
+    data: XOR<challengesUpdateManyMutationInput, challengesUncheckedUpdateManyWithoutProfileInput>
+  }
+
+  export type challengesScalarWhereInput = {
+    AND?: challengesScalarWhereInput | challengesScalarWhereInput[]
+    OR?: challengesScalarWhereInput[]
+    NOT?: challengesScalarWhereInput | challengesScalarWhereInput[]
+    id?: IntFilter<"challenges"> | number
+    c_target?: Enumc_target_typeFilter<"challenges"> | $Enums.c_target_type
+    c_description?: StringFilter<"challenges"> | string
+    title?: StringFilter<"challenges"> | string
+    time_created?: DateTimeFilter<"challenges"> | Date | string
+    creator_id?: StringNullableFilter<"challenges"> | string | null
+  }
+
+  export type challenge_submissionsCreateManyChallengesInput = {
+    id?: number
+    user_id: string
+    submission_data?: string | null
+    time_submitted?: Date | string
+  }
+
+  export type challenge_submissionsUpdateWithoutChallengesInput = {
+    submission_data?: NullableStringFieldUpdateOperationsInput | string | null
+    time_submitted?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: profileUpdateOneRequiredWithoutChallenge_submissionsNestedInput
+  }
+
+  export type challenge_submissionsUncheckedUpdateWithoutChallengesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: StringFieldUpdateOperationsInput | string
+    submission_data?: NullableStringFieldUpdateOperationsInput | string | null
+    time_submitted?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type challenge_submissionsUncheckedUpdateManyWithoutChallengesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: StringFieldUpdateOperationsInput | string
+    submission_data?: NullableStringFieldUpdateOperationsInput | string | null
+    time_submitted?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type challenge_submissionsCreateManyProfileInput = {
+    id?: number
+    challenge_id: number
+    submission_data?: string | null
+    time_submitted?: Date | string
+  }
+
+  export type challengesCreateManyProfileInput = {
+    id?: number
+    c_target: $Enums.c_target_type
+    c_description: string
+    title: string
+    time_created?: Date | string
+  }
+
+  export type challenge_submissionsUpdateWithoutProfileInput = {
+    submission_data?: NullableStringFieldUpdateOperationsInput | string | null
+    time_submitted?: DateTimeFieldUpdateOperationsInput | Date | string
+    challenges?: challengesUpdateOneRequiredWithoutChallenge_submissionsNestedInput
+  }
+
+  export type challenge_submissionsUncheckedUpdateWithoutProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    challenge_id?: IntFieldUpdateOperationsInput | number
+    submission_data?: NullableStringFieldUpdateOperationsInput | string | null
+    time_submitted?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type challenge_submissionsUncheckedUpdateManyWithoutProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    challenge_id?: IntFieldUpdateOperationsInput | number
+    submission_data?: NullableStringFieldUpdateOperationsInput | string | null
+    time_submitted?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type challengesUpdateWithoutProfileInput = {
+    c_target?: Enumc_target_typeFieldUpdateOperationsInput | $Enums.c_target_type
+    c_description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time_created?: DateTimeFieldUpdateOperationsInput | Date | string
+    challenge_submissions?: challenge_submissionsUpdateManyWithoutChallengesNestedInput
+    open_challenges?: open_challengesUpdateOneWithoutChallengesNestedInput
+    targeted_challenges?: targeted_challengesUpdateOneWithoutChallengesNestedInput
+  }
+
+  export type challengesUncheckedUpdateWithoutProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    c_target?: Enumc_target_typeFieldUpdateOperationsInput | $Enums.c_target_type
+    c_description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time_created?: DateTimeFieldUpdateOperationsInput | Date | string
+    challenge_submissions?: challenge_submissionsUncheckedUpdateManyWithoutChallengesNestedInput
+    open_challenges?: open_challengesUncheckedUpdateOneWithoutChallengesNestedInput
+    targeted_challenges?: targeted_challengesUncheckedUpdateOneWithoutChallengesNestedInput
+  }
+
+  export type challengesUncheckedUpdateManyWithoutProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    c_target?: Enumc_target_typeFieldUpdateOperationsInput | $Enums.c_target_type
+    c_description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time_created?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

@@ -97,7 +97,8 @@ exports.Prisma.ChallengesScalarFieldEnum = {
   c_target: 'c_target',
   c_description: 'c_description',
   title: 'title',
-  time_created: 'time_created'
+  time_created: 'time_created',
+  creator_id: 'creator_id'
 };
 
 exports.Prisma.Open_challengesScalarFieldEnum = {
@@ -112,6 +113,25 @@ exports.Prisma.Targeted_challengesScalarFieldEnum = {
   specific_target: 'specific_target'
 };
 
+exports.Prisma.Challenge_submissionsScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  challenge_id: 'challenge_id',
+  submission_data: 'submission_data',
+  time_submitted: 'time_submitted'
+};
+
+exports.Prisma.ProfileScalarFieldEnum = {
+  profile_id: 'profile_id',
+  first_name: 'first_name',
+  last_name: 'last_name',
+  coins: 'coins',
+  phone_number: 'phone_number',
+  email: 'email',
+  date_of_birth: 'date_of_birth',
+  gender: 'gender'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -121,15 +141,28 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
 exports.c_target_type = exports.$Enums.c_target_type = {
   targeted: 'targeted',
   open: 'open'
 };
 
+exports.gender_type = exports.$Enums.gender_type = {
+  male: 'male',
+  female: 'female',
+  other: 'other'
+};
+
 exports.Prisma.ModelName = {
   challenges: 'challenges',
   open_challenges: 'open_challenges',
-  targeted_challenges: 'targeted_challenges'
+  targeted_challenges: 'targeted_challenges',
+  challenge_submissions: 'challenge_submissions',
+  profile: 'profile'
 };
 /**
  * Create the Client
@@ -142,7 +175,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\diego\\Documents\\Coding\\pawnprizes\\generated\\prisma",
+      "value": "/Users/diego/mystuff/Coding/pawnprizes/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -151,12 +184,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\diego\\Documents\\Coding\\pawnprizes\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/diego/mystuff/Coding/pawnprizes/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -179,13 +212,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgres\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel challenges {\n  id                  Int                  @id @default(autoincrement())\n  c_target            c_target_type\n  c_description       String               @db.VarChar(280)\n  title               String               @db.VarChar(64)\n  time_created        DateTime             @db.Timestamp(6)\n  open_challenges     open_challenges?\n  targeted_challenges targeted_challenges?\n}\n\nmodel open_challenges {\n  challenge_id Int        @id\n  submissions  Int\n  challenges   challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)\n}\n\nmodel targeted_challenges {\n  challenge_id      Int        @id\n  value_bet_for     Int\n  value_bet_against Int\n  specific_target   String     @db.VarChar(50)\n  challenges        challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)\n}\n\nenum c_target_type {\n  targeted\n  open\n}\n",
-  "inlineSchemaHash": "fdfb55e63ebcd1facfefaa9fd897a71893e20007c4d63d65b6779f62d207b0dc",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgres\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel challenges {\n  id                    Int                     @id @default(autoincrement())\n  c_target              c_target_type\n  c_description         String                  @db.VarChar(280)\n  title                 String                  @db.VarChar(64)\n  time_created          DateTime                @default(now()) @db.Timestamp(6)\n  creator_id            String?                 @db.VarChar(50)\n  challenge_submissions challenge_submissions[]\n  profile               profile?                @relation(fields: [creator_id], references: [profile_id], onDelete: NoAction, onUpdate: NoAction)\n  open_challenges       open_challenges?\n  targeted_challenges   targeted_challenges?\n}\n\nmodel open_challenges {\n  challenge_id Int        @id\n  submissions  Int        @default(0)\n  challenges   challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)\n}\n\nmodel targeted_challenges {\n  challenge_id      Int        @id\n  value_bet_for     Int\n  value_bet_against Int\n  specific_target   String     @db.VarChar(50)\n  challenges        challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)\n}\n\nmodel challenge_submissions {\n  id              Int        @id @default(autoincrement())\n  user_id         String     @db.VarChar(50)\n  challenge_id    Int\n  submission_data String?\n  time_submitted  DateTime   @default(now()) @db.Timestamp(6)\n  challenges      challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)\n  profile         profile    @relation(fields: [user_id], references: [profile_id], onDelete: NoAction, onUpdate: NoAction)\n\n  @@unique([user_id, challenge_id])\n}\n\nmodel profile {\n  profile_id            String                  @id @db.VarChar(50)\n  first_name            String\n  last_name             String\n  coins                 Int                     @default(0)\n  phone_number          String                  @db.VarChar(15)\n  email                 String                  @unique @db.VarChar(100)\n  date_of_birth         DateTime                @db.Date\n  gender                gender_type\n  challenge_submissions challenge_submissions[]\n  challenges            challenges[]\n}\n\nenum c_target_type {\n  targeted\n  open\n}\n\nenum gender_type {\n  male\n  female\n  other\n}\n",
+  "inlineSchemaHash": "35a049c19e805945c02c18c8d20ac4ba53c6115fed70144f1bf645357c8480f8",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"challenges\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"c_target\",\"kind\":\"enum\",\"type\":\"c_target_type\"},{\"name\":\"c_description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"time_created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"open_challenges\",\"kind\":\"object\",\"type\":\"open_challenges\",\"relationName\":\"challengesToopen_challenges\"},{\"name\":\"targeted_challenges\",\"kind\":\"object\",\"type\":\"targeted_challenges\",\"relationName\":\"challengesTotargeted_challenges\"}],\"dbName\":null},\"open_challenges\":{\"fields\":[{\"name\":\"challenge_id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"submissions\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"challenges\",\"kind\":\"object\",\"type\":\"challenges\",\"relationName\":\"challengesToopen_challenges\"}],\"dbName\":null},\"targeted_challenges\":{\"fields\":[{\"name\":\"challenge_id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"value_bet_for\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"value_bet_against\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"specific_target\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"challenges\",\"kind\":\"object\",\"type\":\"challenges\",\"relationName\":\"challengesTotargeted_challenges\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"challenges\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"c_target\",\"kind\":\"enum\",\"type\":\"c_target_type\"},{\"name\":\"c_description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"time_created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"creator_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"challenge_submissions\",\"kind\":\"object\",\"type\":\"challenge_submissions\",\"relationName\":\"challenge_submissionsTochallenges\"},{\"name\":\"profile\",\"kind\":\"object\",\"type\":\"profile\",\"relationName\":\"challengesToprofile\"},{\"name\":\"open_challenges\",\"kind\":\"object\",\"type\":\"open_challenges\",\"relationName\":\"challengesToopen_challenges\"},{\"name\":\"targeted_challenges\",\"kind\":\"object\",\"type\":\"targeted_challenges\",\"relationName\":\"challengesTotargeted_challenges\"}],\"dbName\":null},\"open_challenges\":{\"fields\":[{\"name\":\"challenge_id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"submissions\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"challenges\",\"kind\":\"object\",\"type\":\"challenges\",\"relationName\":\"challengesToopen_challenges\"}],\"dbName\":null},\"targeted_challenges\":{\"fields\":[{\"name\":\"challenge_id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"value_bet_for\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"value_bet_against\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"specific_target\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"challenges\",\"kind\":\"object\",\"type\":\"challenges\",\"relationName\":\"challengesTotargeted_challenges\"}],\"dbName\":null},\"challenge_submissions\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"challenge_id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"submission_data\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"time_submitted\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"challenges\",\"kind\":\"object\",\"type\":\"challenges\",\"relationName\":\"challenge_submissionsTochallenges\"},{\"name\":\"profile\",\"kind\":\"object\",\"type\":\"profile\",\"relationName\":\"challenge_submissionsToprofile\"}],\"dbName\":null},\"profile\":{\"fields\":[{\"name\":\"profile_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"first_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"last_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"coins\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"phone_number\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_of_birth\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"gender\",\"kind\":\"enum\",\"type\":\"gender_type\"},{\"name\":\"challenge_submissions\",\"kind\":\"object\",\"type\":\"challenge_submissions\",\"relationName\":\"challenge_submissionsToprofile\"},{\"name\":\"challenges\",\"kind\":\"object\",\"type\":\"challenges\",\"relationName\":\"challengesToprofile\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

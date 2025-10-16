@@ -125,7 +125,8 @@ exports.Prisma.ChallengesScalarFieldEnum = {
   c_target: 'c_target',
   c_description: 'c_description',
   title: 'title',
-  time_created: 'time_created'
+  time_created: 'time_created',
+  creator_id: 'creator_id'
 };
 
 exports.Prisma.Open_challengesScalarFieldEnum = {
@@ -140,6 +141,25 @@ exports.Prisma.Targeted_challengesScalarFieldEnum = {
   specific_target: 'specific_target'
 };
 
+exports.Prisma.Challenge_submissionsScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  challenge_id: 'challenge_id',
+  submission_data: 'submission_data',
+  time_submitted: 'time_submitted'
+};
+
+exports.Prisma.ProfileScalarFieldEnum = {
+  profile_id: 'profile_id',
+  first_name: 'first_name',
+  last_name: 'last_name',
+  coins: 'coins',
+  phone_number: 'phone_number',
+  email: 'email',
+  date_of_birth: 'date_of_birth',
+  gender: 'gender'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -149,15 +169,28 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
 exports.c_target_type = exports.$Enums.c_target_type = {
   targeted: 'targeted',
   open: 'open'
 };
 
+exports.gender_type = exports.$Enums.gender_type = {
+  male: 'male',
+  female: 'female',
+  other: 'other'
+};
+
 exports.Prisma.ModelName = {
   challenges: 'challenges',
   open_challenges: 'open_challenges',
-  targeted_challenges: 'targeted_challenges'
+  targeted_challenges: 'targeted_challenges',
+  challenge_submissions: 'challenge_submissions',
+  profile: 'profile'
 };
 
 /**
