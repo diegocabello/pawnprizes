@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
@@ -22,7 +23,7 @@ export default function HomePage() {
           transition={{ delay: 0.2 }}
           className="mt-6 text-xl sm:text-2xl text-gray-300 max-w-2xl"
         >
-          Challenge the world. Compete with your favorite influencers. Place bets. Cash out big.
+          Challenge the world. Place bets. Cash out big.
         </motion.p>
 
         <motion.div
@@ -31,18 +32,19 @@ export default function HomePage() {
           transition={{ delay: 0.4 }}
           className="mt-10 flex flex-wrap justify-center gap-6"
         >
-          <a
+          <Link
             href="/create-challenge"
             className="px-8 py-3 rounded-2xl bg-yellow-500 text-black font-semibold hover:bg-yellow-400 transition-colors"
           >
             Start a Challenge
-          </a>
-          <a
+          </Link>
+
+          <Link
             href="/browse-challenges"
             className="px-8 py-3 rounded-2xl border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black transition-colors"
           >
             Browse Challenges
-          </a>
+          </Link>
         </motion.div>
       </section>
 
@@ -54,7 +56,7 @@ export default function HomePage() {
         >
           <h3 className="text-2xl font-bold mb-2 text-yellow-400">Challenge Anyone</h3>
           <p className="text-gray-400">
-           Challenge your favorite creators, or the whole world!
+            Challenge your favorite creators, or the whole world!
           </p>
         </motion.div>
 
@@ -91,7 +93,7 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="border-t border-gray-800 text-center py-6 text-sm text-gray-500">
-        © {new Date().getFullYear()}
+        © {new Date().getFullYear()} PawnPrizes — Challenge. Bet. Win.
       </footer>
     </main>
   );
