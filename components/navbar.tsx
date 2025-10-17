@@ -77,13 +77,6 @@ export default function Navbar({ coins, setCoins }: NavbarProps) {
                 ✕
               </button>
               <Link
-                href="/"
-                onClick={() => setMenuOpen(false)}
-                className="hover:opacity-70 transition-opacity"
-              >
-                Watch
-              </Link>
-              <Link
                 href="/browse-challenges"
                 onClick={() => setMenuOpen(false)}
                 className="hover:opacity-70 transition-opacity"
@@ -95,7 +88,7 @@ export default function Navbar({ coins, setCoins }: NavbarProps) {
                 onClick={() => setMenuOpen(false)}
                 className="hover:opacity-70 transition-opacity"
               >
-                Make Challenge
+                Create Challenge
               </Link>
               <Link
                 href="/profile"
