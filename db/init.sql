@@ -41,7 +41,17 @@ CREATE TABLE targeted_challenges (
  c_target c_target_type NOT NULL DEFAULT 'targeted',
  specific_target VARCHAR(50) NOT NULL,
  FOREIGN KEY (challenge_id, c_target) REFERENCES challenges(id, c_target),
- CONSTRAINT check_targeted CHECK (c_target = 'targeted')
+ CONSTRAINT check_targeted CHECK (c_target = 'targeted'),
+ UNIQUE(challenge_id, c_target),
+ -- votes
+ votes_for INT NOT NULL DEFAULT 0,
+ votes_against INT NOT NULL DEFAULT 0,
+ -- bets
+ bettors_for INT NOT NULL DEFAULT 0,
+ bettors_against INT NOT NULL DEFAULT 0,
+ bet_spread_total INT NOT NULL DEFAULT 0,
+ bet_spread_for INT NOT NULL DEFAULT 0,
+ bet_spread_against INT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE targeted_challenges_votes (
@@ -85,7 +95,8 @@ CREATE TABLE open_challenges (
  c_target c_target_type NOT NULL DEFAULT 'open',
  submissions INT NOT NULL DEFAULT 0,
  FOREIGN KEY (challenge_id, c_target) REFERENCES challenges(id, c_target),
- CONSTRAINT check_open CHECK (c_target = 'open')
+ CONSTRAINT check_open CHECK (c_target = 'open'),
+ UNIQUE(challenge_id, c_target)
 );
 
 CREATE TABLE open_challenge_submissions (
@@ -100,3 +111,183 @@ CREATE TABLE open_challenge_submissions (
  CONSTRAINT check_open_submission CHECK (c_target = 'open'),
  UNIQUE(user_id, challenge_id)
 );
+
+-- ============================================================================
+-- TRIGGERS FOR AUTOMATIC CACHE UPDATES
+-- ============================================================================
+
+-- Function to update vote counts when votes are inserted/deleted
+CREATE OR REPLACE FUNCTION update_vote_counts()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF TG_OP = 'INSERT' THEN
+    -- Increment the appropriate vote counter
+    IF NEW.vote_direction = 'for' THEN
+      UPDATE targeted_challenges 
+      SET votes_for = votes_for + 1 
+      WHERE challenge_id = NEW.challenge_id;
+    ELSE
+      UPDATE targeted_challenges 
+      SET votes_against = votes_against + 1 
+      WHERE challenge_id = NEW.challenge_id;
+    END IF;
+    RETURN NEW;
+    
+  ELSIF TG_OP = 'DELETE' THEN
+    -- Decrement the appropriate vote counter
+    IF OLD.vote_direction = 'for' THEN
+      UPDATE targeted_challenges 
+      SET votes_for = votes_for - 1 
+      WHERE challenge_id = OLD.challenge_id;
+    ELSE
+      UPDATE targeted_challenges 
+      SET votes_against = votes_against - 1 
+      WHERE challenge_id = OLD.challenge_id;
+    END IF;
+    RETURN OLD;
+    
+  ELSIF TG_OP = 'UPDATE' THEN
+    -- Handle vote direction change
+    IF OLD.vote_direction != NEW.vote_direction THEN
+      -- Decrement old direction
+      IF OLD.vote_direction = 'for' THEN
+        UPDATE targeted_challenges 
+        SET votes_for = votes_for - 1 
+        WHERE challenge_id = OLD.challenge_id;
+      ELSE
+        UPDATE targeted_challenges 
+        SET votes_against = votes_against - 1 
+        WHERE challenge_id = OLD.challenge_id;
+      END IF;
+      
+      -- Increment new direction
+      IF NEW.vote_direction = 'for' THEN
+        UPDATE targeted_challenges 
+        SET votes_for = votes_for + 1 
+        WHERE challenge_id = NEW.challenge_id;
+      ELSE
+        UPDATE targeted_challenges 
+        SET votes_against = votes_against + 1 
+        WHERE challenge_id = NEW.challenge_id;
+      END IF;
+    END IF;
+    RETURN NEW;
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create trigger for votes
+CREATE TRIGGER trigger_update_vote_counts
+AFTER INSERT OR UPDATE OR DELETE ON targeted_challenges_votes
+FOR EACH ROW EXECUTE FUNCTION update_vote_counts();
+
+-- Function to update bet counts and spreads when bets are inserted/deleted
+CREATE OR REPLACE FUNCTION update_bet_stats()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF TG_OP = 'INSERT' THEN
+    -- Update counters and spreads
+    IF NEW.bet_direction = 'for' THEN
+      UPDATE targeted_challenges 
+      SET 
+        bettors_for = bettors_for + 1,
+        bet_spread_for = bet_spread_for + NEW.bet_magnitude,
+        bet_spread_total = bet_spread_total + NEW.bet_magnitude
+      WHERE challenge_id = NEW.challenge_id;
+    ELSE
+      UPDATE targeted_challenges 
+      SET 
+        bettors_against = bettors_against + 1,
+        bet_spread_against = bet_spread_against + NEW.bet_magnitude,
+        bet_spread_total = bet_spread_total + NEW.bet_magnitude
+      WHERE challenge_id = NEW.challenge_id;
+    END IF;
+    RETURN NEW;
+    
+  ELSIF TG_OP = 'DELETE' THEN
+    -- Decrement counters and spreads
+    IF OLD.bet_direction = 'for' THEN
+      UPDATE targeted_challenges 
+      SET 
+        bettors_for = bettors_for - 1,
+        bet_spread_for = bet_spread_for - OLD.bet_magnitude,
+        bet_spread_total = bet_spread_total - OLD.bet_magnitude
+      WHERE challenge_id = OLD.challenge_id;
+    ELSE
+      UPDATE targeted_challenges 
+      SET 
+        bettors_against = bettors_against - 1,
+        bet_spread_against = bet_spread_against - OLD.bet_magnitude,
+        bet_spread_total = bet_spread_total - OLD.bet_magnitude
+      WHERE challenge_id = OLD.challenge_id;
+    END IF;
+    RETURN OLD;
+    
+  ELSIF TG_OP = 'UPDATE' THEN
+    -- Handle bet changes (direction or magnitude)
+    -- First, reverse the old bet
+    IF OLD.bet_direction = 'for' THEN
+      UPDATE targeted_challenges 
+      SET 
+        bettors_for = bettors_for - 1,
+        bet_spread_for = bet_spread_for - OLD.bet_magnitude,
+        bet_spread_total = bet_spread_total - OLD.bet_magnitude
+      WHERE challenge_id = OLD.challenge_id;
+    ELSE
+      UPDATE targeted_challenges 
+      SET 
+        bettors_against = bettors_against - 1,
+        bet_spread_against = bet_spread_against - OLD.bet_magnitude,
+        bet_spread_total = bet_spread_total - OLD.bet_magnitude
+      WHERE challenge_id = OLD.challenge_id;
+    END IF;
+    
+    -- Then apply the new bet
+    IF NEW.bet_direction = 'for' THEN
+      UPDATE targeted_challenges 
+      SET 
+        bettors_for = bettors_for + 1,
+        bet_spread_for = bet_spread_for + NEW.bet_magnitude,
+        bet_spread_total = bet_spread_total + NEW.bet_magnitude
+      WHERE challenge_id = NEW.challenge_id;
+    ELSE
+      UPDATE targeted_challenges 
+      SET 
+        bettors_against = bettors_against + 1,
+        bet_spread_against = bet_spread_against + NEW.bet_magnitude,
+        bet_spread_total = bet_spread_total + NEW.bet_magnitude
+      WHERE challenge_id = NEW.challenge_id;
+    END IF;
+    RETURN NEW;
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create trigger for bets
+CREATE TRIGGER trigger_update_bet_stats
+AFTER INSERT OR UPDATE OR DELETE ON targeted_challenges_bets
+FOR EACH ROW EXECUTE FUNCTION update_bet_stats();
+
+-- Function to update submission count for open challenges
+CREATE OR REPLACE FUNCTION update_submission_count()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF TG_OP = 'INSERT' THEN
+    UPDATE open_challenges 
+    SET submissions = submissions + 1 
+    WHERE challenge_id = NEW.challenge_id;
+    RETURN NEW;
+    
+  ELSIF TG_OP = 'DELETE' THEN
+    UPDATE open_challenges 
+    SET submissions = submissions - 1 
+    WHERE challenge_id = OLD.challenge_id;
+    RETURN OLD;
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create trigger for open challenge submissions
+CREATE TRIGGER trigger_update_submission_count
+AFTER INSERT OR DELETE ON open_challenge_submissions
+FOR EACH ROW EXECUTE FUNCTION update_submission_count();

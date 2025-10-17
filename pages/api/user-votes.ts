@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma'
 import { auth0 } from '@/lib/auth0'
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log('[user-submissions] Request received:', {
+  console.log('[user-votes] Request received:', {
     method: req.method,
     url: req.url,
     timestamp: new Date().toISOString()
@@ -13,30 +13,30 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const session = await auth0.getSession(req);
 
     if (!session) {
-      console.warn('[user-submissions] No session found - returning 401');
+      console.warn('[user-votes] No session found - returning 401');
       return res.status(401).json({ error: "Unauthorized" });
     }
 
     const user = session.user;
     const sub = user.sub;
 
-    console.log('[user-submissions] Session validated:', {
+    console.log('[user-votes] Session validated:', {
       sub,
       hasUser: !!user
     });
 
     if (!sub) {
-      console.error('[user-submissions] Missing sub from user session:', { user });
+      console.error('[user-votes] Missing sub from user session:', { user });
       return res.status(400).json({ error: 'Invalid user session - missing sub' });
     }
 
     if (req.method === 'GET') {
-      console.log('[user-submissions] GET - Fetching open challenge submissions for user:', sub);
+      console.log('[user-votes] GET - Fetching votes for user:', sub);
 
-      const submissions = await prisma.open_challenge_submissions.findMany({
-        where: { user_id: sub },
+      const votes = await prisma.targeted_challenges_votes.findMany({
+        where: { voter_id: sub },
         include: {
-          open_challenges: {
+          targeted_challenges: {
             include: {
               challenges: {
                 select: {
@@ -50,26 +50,25 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           }
         },
         orderBy: {
-          time_submitted: 'desc'
+          vote_id: 'desc'
         }
       });
 
-      // Transform the data to include challenge title at top level
-      const formattedSubmissions = submissions.map(submission => ({
-        id: submission.open_submission_id,
-        challenge_id: submission.challenge_id,
-        challenge_title: submission.open_challenges.challenges.title,
-        challenge_description: submission.open_challenges.challenges.c_description,
-        media_url: submission.media_url,
-        caption: submission.caption,
-        time_submitted: submission.time_submitted,
+      // Transform the data to include challenge info at top level
+      const formattedVotes = votes.map(vote => ({
+        vote_id: vote.vote_id,
+        challenge_id: vote.challenge_id,
+        challenge_title: vote.targeted_challenges.challenges.title,
+        challenge_description: vote.targeted_challenges.challenges.c_description,
+        vote_direction: vote.vote_direction,
+        specific_target: vote.targeted_challenges.specific_target,
       }));
 
-      console.log('[user-submissions] GET - Found submissions:', formattedSubmissions.length);
-      return res.status(200).json({ submissions: formattedSubmissions });
+      console.log('[user-votes] GET - Found votes:', formattedVotes.length);
+      return res.status(200).json({ votes: formattedVotes });
     }
 
-    console.warn('[user-submissions] Method not allowed:', req.method);
+    console.warn('[user-votes] Method not allowed:', req.method);
     res.setHeader('Allow', ['GET']);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
 
@@ -77,7 +76,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     const errorStack = error instanceof Error ? error.stack : undefined;
 
-    console.error('[user-submissions] Error occurred:', {
+    console.error('[user-votes] Error occurred:', {
       error,
       message: errorMessage,
       stack: errorStack,

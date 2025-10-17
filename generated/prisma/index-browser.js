@@ -131,22 +131,21 @@ exports.Prisma.ChallengesScalarFieldEnum = {
 
 exports.Prisma.Open_challengesScalarFieldEnum = {
   challenge_id: 'challenge_id',
+  c_target: 'c_target',
   submissions: 'submissions'
 };
 
 exports.Prisma.Targeted_challengesScalarFieldEnum = {
   challenge_id: 'challenge_id',
-  value_bet_for: 'value_bet_for',
-  value_bet_against: 'value_bet_against',
-  specific_target: 'specific_target'
-};
-
-exports.Prisma.Challenge_submissionsScalarFieldEnum = {
-  id: 'id',
-  user_id: 'user_id',
-  challenge_id: 'challenge_id',
-  submission_data: 'submission_data',
-  time_submitted: 'time_submitted'
+  c_target: 'c_target',
+  specific_target: 'specific_target',
+  votes_for: 'votes_for',
+  votes_against: 'votes_against',
+  bettors_for: 'bettors_for',
+  bettors_against: 'bettors_against',
+  bet_spread_total: 'bet_spread_total',
+  bet_spread_for: 'bet_spread_for',
+  bet_spread_against: 'bet_spread_against'
 };
 
 exports.Prisma.ProfileScalarFieldEnum = {
@@ -158,6 +157,43 @@ exports.Prisma.ProfileScalarFieldEnum = {
   email: 'email',
   date_of_birth: 'date_of_birth',
   gender: 'gender'
+};
+
+exports.Prisma.Open_challenge_submissionsScalarFieldEnum = {
+  open_submission_id: 'open_submission_id',
+  challenge_id: 'challenge_id',
+  c_target: 'c_target',
+  user_id: 'user_id',
+  media_url: 'media_url',
+  caption: 'caption',
+  time_submitted: 'time_submitted'
+};
+
+exports.Prisma.Targeted_challenges_betsScalarFieldEnum = {
+  bet_id: 'bet_id',
+  challenge_id: 'challenge_id',
+  c_target: 'c_target',
+  bet_direction: 'bet_direction',
+  bet_magnitude: 'bet_magnitude',
+  bettor_id: 'bettor_id'
+};
+
+exports.Prisma.Targeted_challenges_submissionScalarFieldEnum = {
+  submission_id: 'submission_id',
+  challenge_id: 'challenge_id',
+  c_target: 'c_target',
+  submitter_id: 'submitter_id',
+  media_url: 'media_url',
+  caption: 'caption',
+  time_submitted: 'time_submitted'
+};
+
+exports.Prisma.Targeted_challenges_votesScalarFieldEnum = {
+  vote_id: 'vote_id',
+  challenge_id: 'challenge_id',
+  c_target: 'c_target',
+  vote_direction: 'vote_direction',
+  voter_id: 'voter_id'
 };
 
 exports.Prisma.SortOrder = {
@@ -185,12 +221,20 @@ exports.gender_type = exports.$Enums.gender_type = {
   other: 'other'
 };
 
+exports.cast_direction = exports.$Enums.cast_direction = {
+  for: 'for',
+  against: 'against'
+};
+
 exports.Prisma.ModelName = {
   challenges: 'challenges',
   open_challenges: 'open_challenges',
   targeted_challenges: 'targeted_challenges',
-  challenge_submissions: 'challenge_submissions',
-  profile: 'profile'
+  profile: 'profile',
+  open_challenge_submissions: 'open_challenge_submissions',
+  targeted_challenges_bets: 'targeted_challenges_bets',
+  targeted_challenges_submission: 'targeted_challenges_submission',
+  targeted_challenges_votes: 'targeted_challenges_votes'
 };
 
 /**

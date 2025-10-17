@@ -10,9 +10,14 @@ type Challenge = {
   c_description: string;
   time_created: string;
   targeted_challenges?: {
-    value_bet_for: number;
-    value_bet_against: number;
     specific_target: string;
+    votes_for: number;
+    votes_against: number;
+    bettors_for: number;
+    bettors_against: number;
+    bet_spread_total: number;
+    bet_spread_for: number;
+    bet_spread_against: number;
   };
   open_challenges?: {
     submissions: number;
@@ -69,6 +74,32 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
     });
     setBetAmount('');
     setBetError('');
+  };
+
+  const handleVote = async (e: MouseEvent, challengeId: number, voteType: 'for' | 'against') => {
+    e.stopPropagation();
+
+    try {
+      const res = await fetch('/api/create-challenge', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          challenge_id: challengeId,
+          vote_type: voteType
+        })
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Failed to vote');
+      }
+
+      // Refresh challenges to show updated vote counts
+      await fetchChallenges();
+    } catch (err) {
+      console.error('Error voting:', err);
+      setError(err instanceof Error ? err.message : 'An error occurred while voting');
+    }
   };
 
   const handlePlaceBet = async () => {
@@ -169,53 +200,82 @@ export default function BrowseChallenges({ coins, setCoins }: BrowseChallengesPr
                       <span className="text-gray-600 dark:text-gray-400">Target:</span>
                       <span className="font-medium">{challenge.targeted_challenges.specific_target}</span>
                     </div>
-                    <div className="pb-4">
-                      <span className="text-gray-600 dark:text-gray-400"><u>Betting Spread:</u></span>
-                    </div>
-                    <div className="flex justify-between items-center text-gray-600 dark:text-gray-400 text-xs">
-                      <span
-                        className="cursor-pointer hover:text-blue-600"
-                        title="Bet For"
-                        onClick={(e) => handleBetClick(e, challenge.id, 'for')}
-                      >
-                        For
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Votes:</span>
+                      <span className="font-medium">
+                        {challenge.targeted_challenges.votes_for}/{challenge.targeted_challenges.votes_against}
                       </span>
-                      <span
-                        className="cursor-pointer hover:text-red-600"
-                        title="Bet Against"
-                        onClick={(e) => handleBetClick(e, challenge.id, 'against')}
-                      >
-                        Against
-                      </span>
+                      
                     </div>
-                    {(() => {
-                      const betFor = challenge.targeted_challenges.value_bet_for;
-                      const betAgainst = challenge.targeted_challenges.value_bet_against;
-                      const total = betFor + betAgainst;
-                      const forPercent = total === 0 ? 50 : (betFor / total) * 100;
-                      const againstPercent = total === 0 ? 50 : (betAgainst / total) * 100;
+                    {/* Vote Buttons */}
+                    <div className="flex gap-2 pt-2">
+                      <button
+                        onClick={(e) => handleVote(e, challenge.id, 'for')}
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1.5 px-3 rounded text-xs transition-colors"
+                      >
+                        Vote For
+                      </button>
+                      <button
+                        onClick={(e) => handleVote(e, challenge.id, 'against')}
+                        className="flex-1 bg-red-600 hover:bg-red-700 text-white py-1.5 px-3 rounded text-xs transition-colors"
+                      >
+                        Vote Against
+                      </button>
+                    </div>
 
-                      return (
-                        <div className="flex rounded-full overflow-hidden h-8 text-white text-xs font-medium">
-                          <div
-                            className="bg-blue-500 flex items-center justify-start pl-2 cursor-pointer hover:bg-blue-600 transition-colors"
-                            style={{ width: `${forPercent}%` }}
-                            title="Bet For"
-                            onClick={(e) => handleBetClick(e, challenge.id, 'for')}
-                          >
-                            {betFor}
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-400">Bets:</span>
+                      <span className="font-medium">
+                        {challenge.targeted_challenges.bettors_for}/{challenge.targeted_challenges.bettors_against}/{challenge.targeted_challenges.bet_spread_total}
+                      </span>
+                    </div>
+
+                    <div className="pt-2">
+                      <div className="flex justify-between items-center text-gray-600 dark:text-gray-400 text-xs mb-1">
+                        <span
+                          className="cursor-pointer hover:text-blue-600"
+                          title="Bet For"
+                          onClick={(e) => handleBetClick(e, challenge.id, 'for')}
+                        >
+                          For
+                        </span>
+                        <span
+                          className="cursor-pointer hover:text-red-600"
+                          title="Bet Against"
+                          onClick={(e) => handleBetClick(e, challenge.id, 'against')}
+                        >
+                          Against
+                        </span>
+                      </div>
+                      {(() => {
+                        const betFor = challenge.targeted_challenges.bet_spread_for;
+                        const betAgainst = challenge.targeted_challenges.bet_spread_against;
+                        const total = betFor + betAgainst;
+                        const forPercent = total === 0 ? 50 : (betFor / total) * 100;
+                        const againstPercent = total === 0 ? 50 : (betAgainst / total) * 100;
+
+                        return (
+                          <div className="flex rounded-full overflow-hidden h-8 text-white text-xs font-medium">
+                            <div
+                              className="bg-blue-500 flex items-center justify-start pl-2 cursor-pointer hover:bg-blue-600 transition-colors"
+                              style={{ width: `${forPercent}%` }}
+                              title="Bet For"
+                              onClick={(e) => handleBetClick(e, challenge.id, 'for')}
+                            >
+                              {betFor}
+                            </div>
+                            <div
+                              className="bg-red-500 flex items-center justify-end pr-2 cursor-pointer hover:bg-red-600 transition-colors"
+                              style={{ width: `${againstPercent}%` }}
+                              title="Bet Against"
+                              onClick={(e) => handleBetClick(e, challenge.id, 'against')}
+                            >
+                              {betAgainst}
+                            </div>
                           </div>
-                          <div
-                            className="bg-red-500 flex items-center justify-end pr-2 cursor-pointer hover:bg-red-600 transition-colors"
-                            style={{ width: `${againstPercent}%` }}
-                            title="Bet Against"
-                            onClick={(e) => handleBetClick(e, challenge.id, 'against')}
-                          >
-                            {betAgainst}
-                          </div>
-                        </div>
-                      );
-                    })()}
+                        );
+                      })()}
+                    </div>
                   </div>
                 )}
 

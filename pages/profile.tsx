@@ -4,16 +4,74 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useRequireRegistration } from '@/hooks/useRequireRegistration';
 
-type TabType = 'details' | 'challenges' | 'submissions';
+type TabType = 'details' | 'challenges' | 'submissions' | 'bets' | 'votes';
+
+type ProfileData = {
+  profile_id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  gender: string;
+  date_of_birth: string;
+  coins: number;
+};
+
+type Challenge = {
+  id: number;
+  title: string;
+  c_description: string;
+  c_target: 'targeted' | 'open';
+  time_created: string;
+  targeted_challenges?: {
+    specific_target: string;
+    votes_for: number;
+    votes_against: number;
+    bettors_for: number;
+    bettors_against: number;
+    bet_spread_total: number;
+  };
+  open_challenges?: {
+    submissions: number;
+  };
+};
+
+type Submission = {
+  id: number;
+  challenge_id: number;
+  challenge_title: string;
+  challenge_description: string;
+  media_url: string | null;
+  caption: string | null;
+  time_submitted: string;
+};
+
+type Bet = {
+  id: number;
+  challenge_title: string;
+  bet_type: 'for' | 'against';
+  amount: number;
+  time_placed: string;
+};
+
+type Vote = {
+  vote_id: number;
+  challenge_id: number;
+  challenge_title: string;
+  challenge_description: string;
+  vote_direction: 'for' | 'against';
+  specific_target: string;
+};
 
 export default function Profile() {
   const router = useRouter();
   const { user, isLoading, checked } = useRequireRegistration();
   const [activeTab, setActiveTab] = useState<TabType>('details');
-  const [profileData, setProfileData] = useState<Record<string, unknown> | null>(null);
-  const [challenges, setChallenges] = useState<Record<string, unknown>[]>([]);
-  const [submissions, setSubmissions] = useState<Record<string, unknown>[]>([]);
-  const [bets, setBets] = useState<Record<string, unknown>[]>([]);
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const [bets, setBets] = useState<Bet[]>([]);
+  const [votes, setVotes] = useState<Vote[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -69,6 +127,15 @@ export default function Profile() {
           const data = await res.json();
           setSubmissions(data.submissions || []);
         }
+      } else if (activeTab === 'votes') {
+        const res = await fetch('/api/user-votes', {
+          method: 'GET',
+          credentials: 'include',
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setVotes(data.votes || []);
+        }
       } else if (activeTab === 'bets') {
         // Bets tab is a placeholder for now
         setBets([]);
@@ -96,6 +163,7 @@ export default function Profile() {
 
   const tabs: { id: TabType; label: string }[] = [
     { id: 'details', label: 'Details' },
+    { id: 'votes', label: 'Votes' },
     { id: 'bets', label: 'Bets' },
     { id: 'challenges', label: 'Challenges Created' },
     { id: 'submissions', label: 'Challenge Submissions' },
@@ -186,6 +254,42 @@ export default function Profile() {
               </div>
             )}
 
+            {/* Votes Tab */}
+            {activeTab === 'votes' && (
+              <div>
+                <h2 className="text-xl font-semibold mb-4">My Votes</h2>
+                {votes.length === 0 ? (
+                  <p className="text-gray-500 dark:text-gray-400">You haven&apos;t voted on any challenges yet.</p>
+                ) : (
+                  <div className="space-y-3">
+                    {votes.map((vote) => (
+                      <div
+                        key={vote.vote_id}
+                        className="border border-gray-300 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-900"
+                      >
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="font-semibold">{vote.challenge_title}</h3>
+                          <span className={`text-xs px-2 py-1 rounded ${
+                            vote.vote_direction === 'for'
+                              ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
+                              : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
+                          }`}>
+                            Voted {vote.vote_direction === 'for' ? 'For' : 'Against'}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
+                          {vote.challenge_description}
+                        </p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">
+                          Target: {vote.specific_target}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Bets Tab */}
             {activeTab === 'bets' && (
               <div>
@@ -251,8 +355,9 @@ export default function Profile() {
                         {challenge.c_target === 'targeted' && challenge.targeted_challenges && (
                           <div className="text-sm text-gray-600 dark:text-gray-400">
                             <p>Target: {challenge.targeted_challenges.specific_target}</p>
-                            <p>Bets For: 💰 {challenge.targeted_challenges.value_bet_for}</p>
-                            <p>Bets Against: 💰 {challenge.targeted_challenges.value_bet_against}</p>
+                            <p>Votes: {challenge.targeted_challenges.votes_for}/{challenge.targeted_challenges.votes_against}</p>
+                            <p>Bettors: {challenge.targeted_challenges.bettors_for}/{challenge.targeted_challenges.bettors_against}</p>
+                            <p>Total Bet Spread: 💰 {challenge.targeted_challenges.bet_spread_total}</p>
                           </div>
                         )}
                         {challenge.c_target === 'open' && challenge.open_challenges && (
@@ -284,9 +389,16 @@ export default function Profile() {
                         className="border border-gray-300 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-900"
                       >
                         <h3 className="font-semibold mb-2">{submission.challenge_title}</h3>
-                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
-                          {submission.submission_data || 'No submission data'}
-                        </p>
+                        {submission.caption && (
+                          <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
+                            {submission.caption}
+                          </p>
+                        )}
+                        {submission.media_url && (
+                          <p className="text-xs text-blue-600 dark:text-blue-400 mb-2">
+                            📎 Media attached
+                          </p>
+                        )}
                         <p className="text-xs text-gray-500 dark:text-gray-500">
                           Submitted: {new Date(submission.time_submitted).toLocaleDateString()}
                         </p>

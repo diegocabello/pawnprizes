@@ -9,55 +9,119 @@ datasource db {
 }
 
 model challenges {
-  id                    Int                     @id @default(autoincrement())
-  c_target              c_target_type
-  c_description         String                  @db.VarChar(280)
-  title                 String                  @db.VarChar(64)
-  time_created          DateTime                @default(now()) @db.Timestamp(6)
-  creator_id            String?                 @db.VarChar(50)
-  challenge_submissions challenge_submissions[]
-  profile               profile?                @relation(fields: [creator_id], references: [profile_id], onDelete: NoAction, onUpdate: NoAction)
-  open_challenges       open_challenges?
-  targeted_challenges   targeted_challenges?
+  id                  Int                  @id @default(autoincrement())
+  c_target            c_target_type
+  c_description       String               @db.VarChar(280)
+  title               String               @db.VarChar(64)
+  time_created        DateTime             @default(now()) @db.Timestamp(6)
+  creator_id          String?              @db.VarChar(50)
+  profile             profile?             @relation(fields: [creator_id], references: [profile_id], onDelete: NoAction, onUpdate: NoAction)
+  open_challenges     open_challenges?
+  targeted_challenges targeted_challenges?
+
+  @@unique([id, c_target])
 }
 
 model open_challenges {
-  challenge_id Int        @id
-  submissions  Int        @default(0)
-  challenges   challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  challenge_id               Int                          @id
+  c_target                   c_target_type                @default(open)
+  submissions                Int                          @default(0)
+  open_challenge_submissions open_challenge_submissions[]
+  challenges                 challenges                   @relation(fields: [challenge_id, c_target], references: [id, c_target], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([challenge_id, c_target])
 }
 
 model targeted_challenges {
-  challenge_id      Int        @id
-  value_bet_for     Int
-  value_bet_against Int
-  specific_target   String     @db.VarChar(50)
-  challenges        challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  challenge_id                   Int                              @id
+  c_target                       c_target_type                    @default(targeted)
+  specific_target                String                           @db.VarChar(50)
+  votes_for                      Int                              @default(0)
+  votes_against                  Int                              @default(0)
+  bettors_for                    Int                              @default(0)
+  bettors_against                Int                              @default(0)
+  bet_spread_total               Int                              @default(0)
+  bet_spread_for                 Int                              @default(0)
+  bet_spread_against             Int                              @default(0)
+  challenges                     challenges                       @relation(fields: [challenge_id, c_target], references: [id, c_target], onDelete: NoAction, onUpdate: NoAction)
+  targeted_challenges_bets       targeted_challenges_bets[]
+  targeted_challenges_submission targeted_challenges_submission[]
+  targeted_challenges_votes      targeted_challenges_votes[]
+
+  @@unique([challenge_id, c_target])
 }
 
-model challenge_submissions {
-  id              Int        @id @default(autoincrement())
-  user_id         String     @db.VarChar(50)
-  challenge_id    Int
-  submission_data String?
-  time_submitted  DateTime   @default(now()) @db.Timestamp(6)
-  challenges      challenges @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  profile         profile    @relation(fields: [user_id], references: [profile_id], onDelete: NoAction, onUpdate: NoAction)
+model profile {
+  profile_id                     String                           @id @db.VarChar(50)
+  first_name                     String
+  last_name                      String
+  coins                          Int                              @default(0)
+  phone_number                   String                           @db.VarChar(15)
+  email                          String                           @unique @db.VarChar(100)
+  date_of_birth                  DateTime                         @db.Date
+  gender                         gender_type
+  challenges                     challenges[]
+  open_challenge_submissions     open_challenge_submissions[]
+  targeted_challenges_bets       targeted_challenges_bets[]
+  targeted_challenges_submission targeted_challenges_submission[]
+  targeted_challenges_votes      targeted_challenges_votes[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model open_challenge_submissions {
+  open_submission_id Int             @id @default(autoincrement())
+  challenge_id       Int
+  c_target           c_target_type   @default(open)
+  user_id            String          @db.VarChar(50)
+  media_url          String?
+  caption            String?
+  time_submitted     DateTime        @default(now()) @db.Timestamp(6)
+  open_challenges    open_challenges @relation(fields: [challenge_id, c_target], references: [challenge_id, c_target], onDelete: NoAction, onUpdate: NoAction)
+  profile            profile         @relation(fields: [user_id], references: [profile_id], onDelete: NoAction, onUpdate: NoAction)
 
   @@unique([user_id, challenge_id])
 }
 
-model profile {
-  profile_id            String                  @id @db.VarChar(50)
-  first_name            String
-  last_name             String
-  coins                 Int                     @default(0)
-  phone_number          String                  @db.VarChar(15)
-  email                 String                  @unique @db.VarChar(100)
-  date_of_birth         DateTime                @db.Date
-  gender                gender_type
-  challenge_submissions challenge_submissions[]
-  challenges            challenges[]
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model targeted_challenges_bets {
+  bet_id              Int                 @id @default(autoincrement())
+  challenge_id        Int
+  c_target            c_target_type       @default(targeted)
+  bet_direction       cast_direction
+  bet_magnitude       Int
+  bettor_id           String              @db.VarChar(50)
+  profile             profile             @relation(fields: [bettor_id], references: [profile_id], onDelete: NoAction, onUpdate: NoAction)
+  targeted_challenges targeted_challenges @relation(fields: [challenge_id, c_target], references: [challenge_id, c_target], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([bettor_id, challenge_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model targeted_challenges_submission {
+  submission_id       Int                 @id @default(autoincrement())
+  challenge_id        Int
+  c_target            c_target_type       @default(targeted)
+  submitter_id        String              @db.VarChar(50)
+  media_url           String?
+  caption             String?
+  time_submitted      DateTime            @default(now()) @db.Timestamp(6)
+  targeted_challenges targeted_challenges @relation(fields: [challenge_id, c_target], references: [challenge_id, c_target], onDelete: NoAction, onUpdate: NoAction)
+  profile             profile             @relation(fields: [submitter_id], references: [profile_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([submitter_id, challenge_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model targeted_challenges_votes {
+  vote_id             Int                 @id @default(autoincrement())
+  challenge_id        Int
+  c_target            c_target_type       @default(targeted)
+  vote_direction      cast_direction
+  voter_id            String              @db.VarChar(50)
+  targeted_challenges targeted_challenges @relation(fields: [challenge_id, c_target], references: [challenge_id, c_target], onDelete: NoAction, onUpdate: NoAction)
+  profile             profile             @relation(fields: [voter_id], references: [profile_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([voter_id, challenge_id])
 }
 
 enum c_target_type {
@@ -69,4 +133,9 @@ enum gender_type {
   male
   female
   other
+}
+
+enum cast_direction {
+  for
+  against
 }
