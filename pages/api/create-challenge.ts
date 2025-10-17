@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 async function handleCreateChallenge(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { c_target, title, c_description, specific_target } = req.body;
+    const { c_target, title, c_description, specific_target, creator_id } = req.body;
 
     // Validate required fields
     if (!c_target || !title || !c_description) {
@@ -42,10 +42,11 @@ async function handleCreateChallenge(req: NextApiRequest, res: NextApiResponse) 
         title,
         c_description,
         time_created: new Date(),
+        creator_id,
         ...(c_target === 'targeted' && {
           targeted_challenges: {
             create: {
-              specific_target: "discs",   // ✅ Only this field
+              specific_target,   // ✅ Only this field
             }
           }
         }),

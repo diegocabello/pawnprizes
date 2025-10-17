@@ -4,6 +4,18 @@ import { useState, FormEvent, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useRequireRegistration } from '@/hooks/useRequireRegistration';
 
+
+type ProfileData = {
+  profile_id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  gender: string;
+  date_of_birth: string;
+  coins: number;
+};
+
 export default function CreateChallenge() {
   const router = useRouter();
   const [challengeType, setChallengeType] = useState<'targeted' | 'open'>('targeted');
@@ -13,6 +25,9 @@ export default function CreateChallenge() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [dropdownWidth, setDropdownWidth] = useState<number>(0);
+    const [profileData, setProfileData] = useState<ProfileData | null>(null);
+
+  const { user, isLoading, checked } = useRequireRegistration();
 
   const measureRef = useRef<HTMLSpanElement>(null);
 
@@ -23,16 +38,48 @@ export default function CreateChallenge() {
     }
   }, []);
 
+  useEffect(() => {
+    if (checked && user) {
+      fetchProfile();
+    }
+  }, [checked, user]);
+
+  const fetchProfile = async () => {
+    try {
+      const res = await fetch('/api/profile', {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to fetch profile');
+      }
+
+      const data = await res.json();
+      setProfileData(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
+    if (!profileData) {
+      setError('fuck');
+      return;
+    }
+    
     try {
       const payload = {
         c_target: challengeType,
         title,
         c_description: description,
+        creator_id: profileData.profile_id,  // ✅ include this line
         ...(challengeType === 'targeted' && { specific_target: specificTarget })
       };
 

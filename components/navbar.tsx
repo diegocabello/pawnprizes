@@ -84,7 +84,14 @@ export default function Navbar({ coins, setCoins }: NavbarProps) {
                 Watch
               </Link>
               <Link
-                href="/host-event"
+                href="/browse-challenges"
+                onClick={() => setMenuOpen(false)}
+                className="hover:opacity-70 transition-opacity"
+              >
+                Browse Challenges
+              </Link>
+              <Link
+                href="/create-challenge"
                 onClick={() => setMenuOpen(false)}
                 className="hover:opacity-70 transition-opacity"
               >
